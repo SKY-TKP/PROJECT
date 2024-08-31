@@ -48,7 +48,7 @@ From the above, I would like to analyze the problem. and the relationship of the
 
 import data to R-studio
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled.png)
+![Picture 1](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture1.png)
 
 # 5.library
 
@@ -71,7 +71,7 @@ summary(fire_area)
 summary(Respiratory_patients)
 ```
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%201.png)
+![Picture 2](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%202.png)
 
 2. From the datapm dataset I want to add col_month,col_year and col_num_month Because if using to create graphs in Power, it is very important to have col num_month in sorting.
 
@@ -89,7 +89,7 @@ data <- data %>%
  mutate(num_month = match(month, tolower(month.abb)))
 ```
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%202.png)
+![Picture 3](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%203.png)
 
 3. Find the minimum, maximum, and average annual PM2.5 values. Create a table in Excel.
 
@@ -104,23 +104,23 @@ df <- data %>%
 print(df)
 ```
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%203.png)
+![Picture 4](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%204.png)
 
 4.Number of factories per year
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%204.png)
+![Picture 5](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%205.png)
 
 5. Number of fire areas per year (Acre)
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%205.png)
+![Picture 6](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%206.png)
 
 6.Number of patients with respiratory diseases each year
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%206.png)
+![Picture 7](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%207.png)
 
 7. Take the values that are different. Put it in an excel table.
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%207.png)
+![Picture 8](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%208.png)
 
 8.Find the max, min and average values of pm2.5 for each month in the past 5 years.
 
@@ -134,13 +134,13 @@ dfmonth <- data %>%
  )
 ```
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%208.png)
+![Picture 9](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%209.png)
 
 # **6. Analyze data**
 
 1. Average PM2.5 concentration each yearFrom data from the past 5 years It was found that the average PM2.5 tends to increase every year.
 
-![Untitled](R%20Workshops%203e368f916c95467a84ae236767df1987/Untitled%209.png)
+![Picture 10](https://github.com/SKY-TKP/Project/blob/main/r-programming/pm2.5-chiangmai/Picture%2010.png)
 
 2.Which month is most valuable? Average pm2.5 is the highest
 
