@@ -1,0 +1,89 @@
+---
+title: 'Week 05: ML Pipeline'
+author: "_gu_npe.tnnx__"
+date: "2024-09-07"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+## Load Package
+
+```{r}
+library(tidyverse)
+library(mlbench)
+library(caret)
+```
+
+## Load Data set
+
+```{r}
+df <- read.csv("C:/Users/ธนานพ/Downloads/archive/tumor.csv")
+df
+```
+
+### Check data type in df
+
+```{r}
+str(df)
+```
+
+### Change df$Class to factor (Categorial)
+
+```{r}
+df$Class <- as.factor(df$Class)
+str(df)
+```
+
+## Cross Validation
+
+```{r}
+## Cross validation 
+ctrl <- trainControl(
+  method = "cv",         # Cross-validation
+  number = 10            # 10-fold cross-validation
+)
+```
+
+## Train Model
+
+```{r}
+set.seed(123)  # For reproducibility
+
+model <- train(
+  Class ~ .,                # Predict 'Class' based on all other columns
+  data = df,                # Use the 'Glass' dataset
+  method = "naive_bayes",   # Naive Bayes classifier
+  trControl = ctrl          # Cross-validation control
+)
+
+print(model)
+```
+
+## Confustion Matrix
+
+```{r}
+## Confustion Matrix
+p <- predict(model, newdata = df)
+confusionMatrix(p, df$Class, positive = "2")
+```
+
+```{r}
+ggplot() +
+  geom_col(data = data.frame(Class = levels(df$Class),  
+                             counting_p = table(p)), 
+           aes(x = Class, y = table(p)), 
+           fill = 'red', alpha = 0.5, width = 0.4) +   
+  geom_col(data = data.frame(Class = levels(df$Class),  
+                             Count = table(df$Class)), 
+           aes(x = Class, y = table(df$Class)),
+           fill = 'lightblue', alpha = 0.4, width = 0.4) +
+  labs(title = "Distribution of Predicted vs. Actual Classes",  
+       x = "Class", y = "Count") + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.title = element_text(size = 12)
+  )
+```
