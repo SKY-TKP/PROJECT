@@ -1,0 +1,290 @@
+# SQL Workshops
+
+Completed: June 23, 2024
+Detail: ขมวดเนื้อหา 101 - 103 ยาวทีเดียว (ไม่ได้โน้ตไร)
+Status: Done
+Type: Summarize
+
+# **(SQL) การวิเคราะห์การใช้บริการของลูกค้าธนาคาร**
+
+## 1. วัตถุประสงค์
+
+1. เพื่อวิเคราะห์ข้อมูลลูกค้าเพื่อทำความเข้าใจแนวโน้มและพฤติกรรมการซื้อของลูกค้า
+2. เพื่อสรุปผลจากข้อมูล และมอบแนวทางเสนอแนะให้แก่ธนาคารแห่งนี้
+
+## 2. คำถาม
+
+1. จำนวนลูกค้าทั้งหมด
+2. กลุ่มช่วงอายุใดมีการใช้บริการมากที่สุด (กำหนดให้มีกลุ่มช่วงอายุ 18–30 ปี, 31–40 ปี, 41–50 ปีและ 51 ปีขึ้นไป)
+3. กลุ่มช่วงอายุใดมีการใช้จ่ายในบริการมากที่สุด
+4. ลูกค้ากลุ่มใดมีจำนวนการใช้บริการมากที่สุด และมีรายได้เฉลี่ยต่อเดือนเท่าไร (กำหนดให้กลุ่มช่วงรายได้ต่อเดือน 1000–9999 คือกลุ่มผู้มีรายได้น้อย, 10000–29999 คือกลุ่มรายได้ปานกลาง, 30000–49999 คือกลุ่มรายได้สูง และ มากกว่า 50000+ เป็นกลุ่มรายได้สูงพิเศษ)
+5. กลุ่มลูกค้าใดมียอดการใช้บริการสูงที่สุด
+6. บริการใดที่มีจำนวนลูกค้าใช้บริการมากที่สุด และบริการใดมียอดขายสูงที่สุ
+7. บริการเสริมใดมีจำนวนลูกค้าใช้บริการมากที่สุด
+8. การใช้บริการหลักร่วมบริการเสริมใดมีจำนวนผู้ใช้บริการ 5 อันดับแรก
+
+## 3. เครื่องมือ
+
+- SQLite
+- Pivot table from MS Excel
+
+---
+
+## 4. การวิเคราะห์
+
+1.จำนวนผู้ใช้บริการทั้งหมด
+
+- มีจำนวนลูกค้าทั้งสิ้น 9942 คน
+
+```sql
+SELECT
+count(order_id) as total_customer
+from PredictionPal
+```
+
+![Untitled](830f3c8b-580e-4ca0-8635-8623f79b3bf7.png)
+
+2.กลุ่มผู้ใช้บริการช่วงอายุใดมีการใช้บริการมากที่สุด และมียอดการใช้บริการการรวมเท่าไร
+
+- กลุ่มที่ยอดการใช้บริการมากที่สุด คือกลุ่มช่วงอายุ 51+ ปีขึ้นไป มียอดการใช้บริการรวมทั้งสิ้น $3,263,043
+
+```sql
+SELECT
+    CASE
+        WHEN age BETWEEN 18 AND 30 THEN '18-30'
+        WHEN age BETWEEN 31 AND 40 THEN '31-40'
+        WHEN age BETWEEN 41 AND 50 THEN '41-50'
+        ELSE '51+'
+    END AS age_group,
+    COUNT(age) AS group_count,
+--  ROUND(AVG(income), 2) AS avg_income_customer,
+--  ROUND(AVG(purchase_history), 2) AS avg_purchase,
+ sum (purchase_history) as total_purchase
+FROM
+    PredictionPal
+GROUP BY
+    age_group
+ORDER by group_count DESC;
+```
+
+![Untitled](Untitled.png)
+
+1. ผู้ใช้บริการกลุ่มใดมีจำนวนการใช้บริการมากที่สุด และมีรายได้เฉลี่ยเท่าไร
+- กลุ่มผู้ใช้บริการที่มีจำนวนการใช่บริการมากที่สุด คือกลุ่มลูกค้า Extra hight in-come มีจำนวน 5069 คน และมีรายได้เฉลี่ย $75052.21
+
+4.ผู้ใช้บริการกลุ่มใดมียอดการใช้บริการสูงที่สุด
+
+- กลุ่มที่ยอดการใช้บริการสูงสุดคือ กลุ่ม Extra hight in-come มียอดการใช้บริการทั้งสิ้น $5,328,475
+
+```sql
+SELECT
+ CASE
+  WHEN income BETWEEN 1000 AND 9999 THEN 'low_income'
+  WHEN income BETWEEN 10000 AND 29999 THEN 'normal_income'
+  WHEN income BETWEEN 30000 AND 49999 THEN 'high_income'
+  ELSE 'extra_high_income'
+ END AS income_group,
+ count(order_id) as group_count,
+ round(avg(income),2) as avg_income,
+--  round(avg(purchase_history),2) as avg_purchase,
+ sum(purchase_history) as total_purchase
+FROM
+ PredictionPal
+GROUP BY
+ income_group
+ORDER BY
+ purchase_history DESC;
+```
+
+![Untitled](Untitled%201.png)
+
+5.บริการใดที่มีจำนวนผู้ใช้บริการมากที่สุด และบริการใดมียอดขายสูงที่สุด
+
+- บริการที่มีจำนวนผู้ใช้บริการ และยอดขายสูงที่สุดคือ Technology financial services มีจำนวนผู้ใช้บริการ 2596 คน และมียอดขายทั้งสิ้น $2,688,332
+
+```sql
+SELECT 
+service_type,
+count(order_id) as total_customer,
+sum(purchase_history) as total_puechase
+FROM PredictionPal
+group by service_type
+order by total_customer DESC;
+```
+
+![Untitled](Untitled%202.png)
+
+6.บริการเสริมใดมีจำนวนผู้ใช้บริการมากที่สุด
+
+- บริการเสริมที่มีจำนวนผู้ใช้บริการมากที่สุดคือ Tax Planning Consultancy มีจำนวนผู้ใช้บริการ 946 คน
+
+```sql
+SELECT 
+additionalservicesusage as additional_services,
+count(additionalservicesusage) as total_additional_services
+FROM
+PredictionPal
+GROUP by additionalservicesusage
+ORDER by total_additional_services DESC;
+```
+
+![Untitled](Untitled%203.png)
+
+7. การใช้บริการหลักร่วมบริการเสริมใดมีจำนวนผู้ใช้บริการ 5 อันดับแรก
+
+อันดับ 1. Technology financial services + personal budgeting work shop จำนวน 259
+
+อันดับ 2. Technology financial services + Retirement Planning Assistance จำนวน 253 คน
+
+อันดับ 3. Technology financial services + Tax Planning Consultancy จำนวน 253 คน
+
+อันดับ 4. Trust service + Finaancial Coaching Service จำนวo 253 คน
+
+อันดับ 5.ฺ Business financial servvices + Tax planning Consultancy จำนวน 251 คน
+
+```sql
+SELECT
+  CASE
+        WHEN age BETWEEN 18 AND 30 THEN '18-30'
+        WHEN age BETWEEN 31 AND 40 THEN '31-40'
+        WHEN age BETWEEN 41 AND 50 THEN '41-50'
+        ELSE '51+'
+    END AS age_group,
+    service_type,
+    additionalservicesusage as additional_services,
+ count(order_id) as total_customer
+ --sum(purchase_history) as total_purchase
+FROM
+    PredictionPal
+GROUP by service_type,additionalservicesusage
+order by total_customer DESC
+```
+
+![Untitled](Untitled%204.png)
+
+8. การใช้บริการหลักร่วมบริการเสริมใดมียอดการใช้บริการสูงสุด 5 อันดับแรก
+
+อันดับ 1 Technology financial services + Tax Planning Consultancy ยอดการใช้บริการ $272,975
+
+อันดับ 2 Trust service + Finaancial Coaching Service ยอดการใช้บริการ $266,591
+
+อันดับ 3 Personal financial services ยอดการใช้บริการ $263,196
+
+อันดับ 4 Personal financial services + Finaancial Coaching Service ยอดการใช้บริการ $257,192
+
+อันดับ 5 Technology financial services + Insrurance Advisory Program ยอดการใช้บริการ $256028
+
+```sql
+SELECT
+  CASE
+        WHEN age BETWEEN 18 AND 30 THEN '18-30'
+        WHEN age BETWEEN 31 AND 40 THEN '31-40'
+        WHEN age BETWEEN 41 AND 50 THEN '41-50'
+        ELSE '51+'
+    END AS age_group,
+    service_type,
+    additionalservicesusage as additional_services,
+ --count(order_id) as total_customer
+ sum(purchase_history) as total_purchase
+FROM
+    PredictionPal
+GROUP by service_type,additionalservicesusage
+order by total_purchase DESC
+LIMIT 5;
+```
+
+![Untitled](Untitled%205.png)
+
+## **5. สรุปผล**
+
+ธนาคารแห่งนี้มียอดเงินจากการให้บริการทั้งสิ้น $10,402,156 จากจำนวนผู้ใช้บริการ 9942 คนพบว่าผู้ใช้บริการส่วนใหญ่เป็นผู้มีอายุ 51 ปีขึ้นไปมีจำนวนทั้งสิ้น 3157 คิดเป็นร้อยละ 32 ของผู้ใช้บริการทั้งหมด นอกจากนี้กลุ่มผู้ใช้บริการที่มีอายุ 51 ปีขึ้นมียอดการใช้บริการมากที่สุดเป็นจำนวนเงินทั้งสิ้น $3,263,043 คิดเป็นร้อยละ 31 จากยอดเงินที่ได้จากบริการต่าง ๆ
+
+ลูกค้าส่วนใหญ่ของธนาคารนี้อยู่ในกลุ่มผู้มีรายได้ต่อเดือนสูงพิเศษ (Extra high income) ที่มีค่าเฉลี่ยรายรับต่อเดือน $75082.21 มีจำนวนทั้งสิ้น 5069 คนคิดเป็นร้อยละ 51 ของกลุ่มที่ใช้บริการทั้งหมด
+
+บริการหลักที่มีจำนวนผู้ใช้บริการมากสุด มีผู้ใช้บริการทั้งสิ้น 2596 คน คิดเป็นร้อยละ 26 คือบริการ Technology financial services และยังเป็นบริการที่ยอดขายมากที่สุดเป็นจำนวนเงินทั้งสิ้น $2,688,332 คิดเป็นร้อยละ 26 จากบริการทั้งหมดที่ขายได้ โดยลูกค้าที่ใช้บริการนี้เป็นลูกค้ากลุ่มที่มีรายได้สูงพิเศษเป็นจำนวน 1317 คนคิดเป็นร้อยละ 13 จากผู้ใช้บริการนี้
+
+บริการเสริมที่มีจำนวนลูกค้ามากที่สุดคือ Tax Planning Consultancy (ที่ปรึกษาการวางแผนภาษี) มีจำนวนผู้ใช้บริการเป็นจำนวน 946 คนคิดเป็นร้อยละ 10 ของการใช้บริการเสริมทั้งหมด
+
+การใช้บริการหลักรวมกับบริการเสริม 5 อันดับแรกที่ลูกค้านิยมใช้คือ
+
+อันดับ 1 Technology financial services + personal budgeting work shop จำนวน 259
+
+อันดับ 2 Technology financial services + Retirement Planning Assistance จำนวน 253 คน
+
+อันดับ 3 Technology financial services + Tax Planning Consultancy จำนวน 253 คน
+
+อันดับ 4 Trust service + Financial Coaching Service จำนวo 253 คน
+
+อันดับ 5 Business financial services + Tax planning Consultancy และ Personal financial servicesจำนวน 251 คน
+
+การใช้บริการหลักรวมกับบริการเสริม 5 อันดับแรกที่มียอดขายสูงสุง
+
+อันดับ 1 Technology financial services + Tax Planning Consultancy ยอดการใช้บริการ $272,975
+
+อันดับ 2 Trust service + Financial Coaching Service ยอดการใช้บริการ $266,591
+
+อันดับ 3 Personal financial services ยอดการใช้บริการ $263,196
+
+อันดับ 4 Personal financial services + Financial Coaching Service ยอดการใช้บริการ $257,192
+
+อันดับ 5 Technology financial services + Insurance Advisory Program ยอดการใช้บริการ $256028
+
+ลูกค้าส่วนใหญ่ของธนาคารแห่งนี้มีลูกค้าส่วนใหญ่อยู่ในกลุ่มอายุ 51 ปีขึ้น และเป็นผู้ที่มีรายได้ต่อเดือนที่สูงพิเศษ มีบริการหลากหลายประเภท แต่บริการที่ได้รับความนิยมมากที่สุดคือ Technology financial services และบริการเสริม Tax Planning Consultancy
+
+## **6. อภิปรายผล**
+
+สาเหตุที่บริการ Technology financial services และบริการเสริม Tax Planning Consultancy ของธนาคารแห่งนี้ได้รับความนิยม อาจมีสาเหตุมาจากปัจจัยดังต่อไปนี้
+
+1.ภาวะเศรษฐกิจและเทคโนโลยี
+
+เนื่องด้วยภาวะเศรษฐกิจปัจจุบัน มีความผันผวนลูกค้าที่อาจมองหาบริการทางการเงินที่ช่วยให้จัดการความเสี่ยง จัดสรรเงินทุน และเติบโตท่ามกลางความไม่แน่นอนทางเศรษฐกิจ Technology financial services น่าจะตอบโจทย์ความต้องการเหล่านี้ ตัวอย่างเช่น บริการเหล่านี้อาจช่วยลูกค้าวิเคราะห์สถานการณ์ทางการเงิน จัดทำแผนการลงทุน หรือเข้าถึงสินเชื่อที่เหมาะสม
+
+2. การเติบโตของเทคโนโลยี
+
+เทคโนโลยีทางการเงิน (fintech) กำลังพัฒนาอย่างรวดเร็ว Technology financial services น่าจะนำเสนอโซลูชั่นที่ทันสมัย สะดวกรวดเร็ว และปลอดภัย ดึงดูดลูกค้าที่คุ้นเคยกับเทคโนโลยีและต้องการประสบการณ์การใช้งานที่ดี
+
+3. ความกังวลด้านภาษี
+
+กฎหมายภาษีมีความซับซ้อน ลูกค้าอาจมองหาบริการที่ปรึกษาภาษีเพื่อช่วยให้พวกเขาปฏิบัติตามกฎหมาย ลดหย่อนภาษี และเพิ่มประสิทธิภาพการจัดการภาษี บริการเสริม Tax Planning Consultancy น่าจะตอบโจทย์ความต้องการเหล่านี้
+
+4. ลักษณะเฉพาะของลูกค้า
+
+ฐานลูกค้ากลุ่มผู้มีรายได้ต่อเดือนสูงพิเศษที่มีมากถึงร้อยละ 51 ของจำนวนลูกค้าทั้งหมด ลูกค้ากลุ่มนี้มักมีสินทรัพย์และรายได้ที่สูง อาจมองหาบริการทางการเงินที่ซับซ้อน ปรับแต่งได้ และมีประสิทธิภาพ Technology financial services น่าจะนำเสนอโซลูชั่นที่ตรงกับความต้องการเหล่านี้ ตัวอย่างเช่น บริการเหล่านี้อาจช่วยลูกค้าจัดการพอร์ตการลงทุน วางแผนเกษียณอายุ หรือจัดการมรดก ซึ่งลูกค้ากลุ่มนี้อาจต้องการความรู้ คำแนะนำ และการสนับสนุนจากผู้เชี่ยวชาญ Technology financial services และบริการเสริม Tax Planning Consultancy น่าจะนำเสนอบริการที่ปรึกษาเฉพาะบุคคล ช่วยให้ลูกค้าตัดสินใจทางการเงินได้อย่างมั่นใจ
+
+ปัจจัยต่าง ๆ เหล่านี้ น่าจะเป็นสาเหตุหลักที่ Technology financial services และบริการเสริม Tax Planning Consultancy ได้รับความนิยมจากลูกค้าของธนาคารแห่งนี
+
+## **7. ข้อเสนอแนะ**
+
+เพื่อเสนอแนวทางการต่อยอด จากข้อมูลที่วิเคราะห์ ธนาคารนี้อาจพิจารณาแนวทางต่อไปนี้ เพื่อเสริมสร้างความนิยมของ Technology financial services และบริการเสริม Tax Planning Consultancy และดึงดูดลูกค้ากลุ่มพรีเมียมเพิ่มเติม
+
+1. ขยายขอบเขตของบริการ:
+
+- นำเสนอบริการ Technology financial services ที่หลากหลายและครอบคลุมมากขึ้น เช่น บริการจัดการสินทรัพย์ บริการวางแผนเกษียณอายุ บริการจัดการมรดกตกทอด หรือบริการสินเชื่อส่วนบุคคล
+- ขยายบริการเสริม Tax Planning Consultancy เพิ่มเติม เช่น บริการวางแผนภาษีระหว่างประเทศ บริการวางแผนภาษีสำหรับธุรกิจ หรือบริการตรวจสอบภาษี
+
+2. พัฒนาระบบเทคโนโลยี
+
+- พัฒนาระบบดิจิทัลสำหรับ Technology financial services ที่ใช้งานง่าย สะดวก รวดเร็ว และปลอดภัย รองรับการใช้งานบนอุปกรณ์ต่างๆ เช่น สมาร์ทโฟน แท็บเล็ต หรือคอมพิวเตอร์
+- นำเสนอบริการ Tax Planning Consultancy ออนไลน์ เช่น บริการแชทบอท หรือบริการวิดีโอคอล ช่วยให้ลูกค้าเข้าถึงบริการได้สะดวกยิ่งขึ้น
+
+3. เสริมสร้างกลยุทธ์ทางการตลาด:
+
+- มุ่งเน้นการสื่อสารไปยังลูกค้ากลุ่มรายได้ต่อเดือนสูงพิเศษ ผ่านช่องทางที่พวกเขาใช้งาน เช่น โซเชียลมีเดีย เว็บไซต์ หรืออีเมล
+- จัดกิจกรรมทางการตลาดที่ตรงใจกลุ่มเป้าหมาย เช่น สัมมนา เวิร์คช็อป หรืองานสังคม เพื่อสร้างความสัมพันธ์และดึงดูดลูกค้า
+- นำเสนอโปรโมชั่นและส่วนลดพิเศษสำหรับ Technology financial services และบริการเสริม Tax Planning Consultancy กระตุ้นให้ลูกค้าตัดสินใจใช้บริการ
+
+4. พัฒนาทักษะพนักงาน:
+
+- ฝึกอบรมพนักงานให้มีความรู้ความเชี่ยวชาญเกี่ยวกับ Technology financial services และบริการเสริม Tax Planning Consultancy
+- พัฒนาทักษะการสื่อสารและการบริการลูกค้าของพนักงาน ให้สามารถให้คำปรึกษาและบริการลูกค้ากลุ่มพรีเมียมได้อย่างมีประสิทธิภาพ
+
+5. ติดตามผลและประเมินผล:
+
+- ติดตามผลการใช้งาน Technology financial services และบริการเสริม Tax Planning Consultancy วิเคราะห์ข้อมูล และนำมาปรับปรุงพัฒนาบริการให้ดียิ่งขึ้น
+- ประเมินผลความพึงพอใจของลูกค้า นำข้อเสนอแนะมาพัฒนาบริการและกลยุทธ์ทางการตลาด
+
+## 8. DASHBOARD
+
+![Untitled](Untitled%206.png)
+
+---
