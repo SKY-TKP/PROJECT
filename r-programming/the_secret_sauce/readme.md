@@ -6,7 +6,9 @@
 โดยในที่นี้ได้ทำหัวข้อเรื่อง **"การศึกษาพฤติกรรมการรับชม Podcast ของคนไทยบนแชนเนล The Secret Sauce"**
 
 # Files
-  ใช้ File จากแชนเนล `The Secret Sauce` ซึ่งบันทึกรายละเอียดต่าง ๆ ของผู้ชมวิดีโอไว้ตั้งแต่ปี 2018 - 2023
+  - ใช้ File จากแชนเนล `The Secret Sauce` ซึ่งบันทึกรายละเอียดต่าง ๆ ของผู้ชมวิดีโอไว้ตั้งแต่ปี 2018 - 2023
+  - Presentation Slide: [Click Here!](https://github.com/SKY-TKP/PROJECT/blob/main/r-programming/the_secret_sauce/The%20Secret%20Sauce%20-%20Presentation.pdf)
+  - Report: [Click Here!](
  
 # Tools
 เครื่องมือที่ใช้ในโปรเจคนี้ จะถูกแบ่งออกเป็น 2 ส่วน คือ 
@@ -18,7 +20,7 @@
 - Microsoft Excel
 - Microsoft Word
 - R - Studio
-- Python
+- Canva
 
 ## Contact
 - Discord
