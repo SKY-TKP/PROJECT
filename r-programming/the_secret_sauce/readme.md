@@ -1,3 +1,5 @@
+![Picture](https://github.com/SKY-TKP/PROJECT/blob/main/r-programming/the_secret_sauce/Descriptive%20Statistics/%E0%B8%9B%E0%B8%81.jpg)
+
 # About Me
 
 สำหรับโปรเจคนี้ เป็นโปรเจคส่วนหนึ่งของรายวิชา 2104254: Engineering Statistics II (สถิตสำหรับงานวิศวกรรม 2) ภาคการศึกษาปลาย ปีการศึกษา 2566
