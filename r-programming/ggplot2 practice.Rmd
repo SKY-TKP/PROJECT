@@ -1,0 +1,191 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# 1. Data Prepare
+
+## - Load ggplot2 package
+
+```{r}
+library(ggplot2)
+```
+
+## - Downlaod the data 
+
+```{r}
+download.file("https://raw.githubusercontent.com/biocorecrg/CRG_RIntroduction/master/ex12_normalized_intensities.csv", "ex12_normalized_intensities.csv", method="curl")
+```
+
+Read file into object “project1” (remember the input/output tutorial!)
+
+About this file:
+
+It is comma separated (csv format).
+The first row is the header.
+Take the row names from the first column.
+
+```{r}
+project1 <- read.table("ex12_normalized_intensities.csv", 
+  sep=",", 
+  header=TRUE, 
+  row.names = 1)
+```
+
+# 2. Data Visualization
+##2.1 Scatter Plot
+
+Using ggplot, create a simple scatter plot representing gene expression of “sampleB” on the x-axis and “sampleH” on the y-axis.
+
+```{r}
+ggplot(data = project1, mapping = aes(x = sampleB, y = sampleH)) + 
+  geom_point(color = 'blue')
+```
+
+Add a column to the data frame “project1” (call this column “expr_limits”), that will be filled the following way:
+
+if the expression of a gene is > 13 in both sampleB and sampleH, set to the value in “expr_limits” to “high”
+if the expression of a gene is < 6 in both sampleB and sampleH, set it to “low”
+if different, set it to “normal”.
+
+```{r}
+project1$expr_limits <- "normal"
+# "high" if project1$sampleB > 13 and project1$sampleH > 13
+project1$expr_limits[project1$sampleB > 13 & project1$sampleH > 13] <- "high"
+# "low" if project1$sampleB < 6 and project1$sampleH < 6
+project1$expr_limits[project1$sampleB < 6 & project1$sampleH < 6] <- "low"
+```
+
+Color the points of the scatter plot according to the newly created column “expr_limits”. Save that plot in the object “p”
+
+```{r}
+p <- ggplot(data = project1, mapping = aes(x = sampleB, y = sampleH, colour = expr_limits)) + 
+  geom_point()
+```
+
+Add a layer to “p” in order to change the points colors to blue (for low), grey (for normal) and red (for high). Save this plot in the object “p2”.
+
+```{r}
+p2 <- p + scale_color_manual(values=c("red", "blue", "grey"))
+```
+
+## 2.2 Box plot
+
+Convert “project1” from a wide format to a long format: save in the object “project_long”
+
+```{r}
+library(reshape2)
+project_long <- melt(data=project1)
+```
+
+Produce a boxplot of the expression of all samples (i.e. each sample is represented by a box)
+
+```{r}
+ggplot(data = project_long, mapping = aes(x = variable, y = value)) + 
+  geom_boxplot()
+```
+
+Modify the previous boxplot so as to obtain 3 “sub-boxplots” per sample, each representing the expression of either “low”, “normal” or “high” genes.
+
+```{r}
+ggplot(data = project_long, mapping = aes(x = variable, y = value, color = expr_limits)) + 
+  geom_boxplot()
+```
+
+Rotate the x-axis labels (90 degrees angle)
+
+```{r}
+ggplot(data=project_long, mapping=aes(x=variable, y=value, color=expr_limits)) + 
+  geom_boxplot() + 
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+Finally, add a title of your choice to the plot.
+
+```{r}
+ggplot(data=project_long, mapping=aes(x=variable, y=value, color=expr_limits)) + 
+  geom_boxplot() + 
+  theme(axis.text.x = element_text(angle = 90)) +
+  ggtitle("My boxplots")
+```
+
+## 2.3 Bar plot
+
+Produce a bar plot of how many low/normal/high genes are in the column “expr_limits” of “project1”.
+
+```{r}
+ggplot(data=project1, mapping=aes(x= expr_limits)) + 
+  geom_bar()
+```
+
+Add an horizontal line at counts 250 (y-axis). Save the plot in the object “bar”
+
+```{r}
+ggplot(data=project1, mapping=aes(x=expr_limits)) + 
+  geom_bar() + 
+  geom_hline(yintercept=250)
+
+bar <- ggplot(data=project1, mapping=aes(x=expr_limits)) + 
+  geom_bar() + 
+  geom_hline(yintercept=250)
+```
+Swap the x and y axis. Save in object “bar2”.
+
+```{r}
+bar2 <- bar + coord_flip()
+bar2
+```
+
+## 2.4 Histogram
+Create a simple histogram using project_long (column “value”).
+```{r}
+ggplot(data=project_long, mapping=aes(x=value)) + 
+  geom_histogram()
+```
+
+Notice that you get the following warning message" stat_bin() using bins = 30. Pick better value with binwidth.
+```{r}
+ggplot(data=project_long, mapping=aes(x=value)) + 
+  geom_histogram(bins=50)
+```
+
+he histogram plots the expression values for All samples.
+Change the plot so as to obtain one histograms per sample.
+
+```{r}
+ggplot(data=project_long, mapping=aes(x=value, fill=variable)) + 
+  geom_histogram(bins=50)
+```
+
+Change argument “position” to “dodge”.
+
+```{r}
+hist1 <- ggplot(data=project_long, mapping=aes(x=value, fill=variable)) + 
+  geom_histogram(position="dodge")
+
+hist1
+```
+
+```{r}
+hist2 <- ggplot(data=project_long, mapping=aes(x=value, fill=variable)) + 
+  geom_histogram(bins=50) + 
+  facet_grid(~variable)
+
+hist2
+```
+
+```{r}
+hist3 <- hist2 + scale_fill_manual(values=rainbow(8))
+
+hist3
+```
+
+Add the xlim() layer.
+
+```{r}
+hist4 <- hist3 + xlim(6, 13) + theme_minimal()
+
+hist4
+```
+
+
