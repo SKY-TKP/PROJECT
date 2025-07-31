@@ -1,0 +1,756 @@
+ CUSTOMER_ID ,city,membership_level,registration_date
+C0001,Pattaya,Silver,unknown
+C0002,Bangkok,Silver,2023-10-02
+C0003,Khon Kaen,Bronze,2024-03-07
+C0004,Chiang Mai,Silver,2023-06-21
+C0005,Khon Kaen,Gold,2024-03-16
+C0006,Khon Kaen,Silver,2023-06-08
+C0007,Pattaya,Bronze,2023-09-11
+C0008,Phuket,Bronze,unknown
+C0009,Pattaya,Gold,2024-05-14
+C0010,Khon Kaen,Bronze,unknown
+C0011,Pattaya,Silver,2023-04-15
+C0012,Phuket,Gold,2023-10-07
+C0013,Phuket,Gold,unknown
+C0014,Khon Kaen,Bronze,2023-05-10
+C0015,Khon Kaen,Silver,2024-04-24
+C0016,Khon Kaen,Bronze,2023-07-21
+C0017,Bangkok,Bronze,2023-02-13
+C0018,Khon Kaen,Bronze,unknown
+C0019,Phuket,Bronze,2023-04-03
+C0020,Phuket,Bronze,2023-05-10
+C0021,Chiang Mai,Gold,2023-07-17
+C0022,Pattaya,Gold,2023-06-26
+C0023,Khon Kaen,Gold,2024-05-16
+C0024,Phuket,Bronze,2023-08-26
+C0025,Pattaya,Gold,2023-07-02
+C0026,Khon Kaen,Silver,2023-03-16
+C0027,Khon Kaen,Bronze,2023-01-02
+C0028,Phuket,Silver,2023-11-12
+C0029,Phuket,Gold,2023-04-11
+C0030,Chiang Mai,Gold,2023-08-18
+C0031,Chiang Mai,Silver,2024-05-15
+C0032,Phuket,Bronze,2023-03-23
+C0033,Chiang Mai,Bronze,2023-03-20
+C0034,Khon Kaen,Bronze,2023-01-05
+C0035,Chiang Mai,Bronze,2023-01-11
+C0036,Pattaya,Silver,2023-04-02
+C0037,Bangkok,Silver,2023-10-09
+C0038,Pattaya,Gold,2024-03-02
+C0039,Bangkok,Silver,2024-03-02
+C0040,Khon Kaen,Silver,2024-01-27
+C0041,Phuket,Gold,2023-12-26
+C0042,Khon Kaen,Bronze,2024-05-24
+C0043,Bangkok,Gold,unknown
+C0044,Pattaya,Gold,2023-09-15
+C0045,Khon Kaen,Bronze,2024-02-09
+C0046,Pattaya,Gold,2023-05-13
+C0047,Chiang Mai,Silver,2023-03-06
+C0048,Phuket,Bronze,2023-05-08
+C0049,Pattaya,Gold,2024-01-06
+C0050,Bangkok,Gold,2024-05-06
+C0051,Bangkok,Gold,2023-09-17
+C0052,Pattaya,Bronze,unknown
+C0053,Pattaya,Bronze,2024-01-27
+C0054,Khon Kaen,Bronze,2023-03-29
+C0055,Khon Kaen,Silver,2023-03-26
+C0056,Bangkok,Gold,2023-07-16
+C0057,Bangkok,Bronze,2024-03-27
+C0058,Pattaya,Gold,2023-06-12
+C0059,Khon Kaen,Gold,2023-08-26
+C0060,Phuket,Silver,unknown
+C0061,Khon Kaen,Silver,2023-05-28
+C0062,Khon Kaen,Gold,2023-05-30
+C0063,Chiang Mai,Gold,unknown
+C0064,Bangkok,Gold,2023-08-22
+C0065,Chiang Mai,Bronze,2023-04-16
+C0066,Khon Kaen,Silver,2023-10-06
+C0067,Bangkok,Bronze,2024-03-15
+C0068,Bangkok,Gold,2024-01-08
+C0069,Pattaya,Bronze,2023-10-19
+C0070,Pattaya,Silver,2023-03-27
+C0071,Phuket,Bronze,2024-04-06
+C0072,Pattaya,Bronze,2023-12-18
+C0073,Pattaya,Gold,2023-03-12
+C0074,Khon Kaen,Bronze,2023-01-12
+C0075,Khon Kaen,Silver,2023-12-19
+C0076,Phuket,Bronze,2023-04-27
+C0077,Khon Kaen,Gold,2023-12-20
+C0078,Khon Kaen,Silver,2023-03-18
+C0079,Chiang Mai,Bronze,2024-05-10
+C0080,Chiang Mai,Bronze,2023-06-18
+C0081,Khon Kaen,Bronze,2023-09-14
+C0082,Phuket,Gold,2023-05-19
+C0083,Bangkok,Silver,2023-05-11
+C0084,Khon Kaen,Gold,2024-05-27
+C0085,Pattaya,Silver,2023-01-29
+C0086,Khon Kaen,Bronze,2024-01-06
+C0087,Bangkok,Silver,2023-07-12
+C0088,Phuket,Bronze,unknown
+C0089,Khon Kaen,Gold,2023-05-11
+C0090,Bangkok,Bronze,2023-06-18
+C0091,Khon Kaen,Silver,unknown
+C0092,Phuket,Silver,2023-05-19
+C0093,Phuket,Silver,2024-04-17
+C0094,Chiang Mai,Bronze,2024-05-17
+C0095,Bangkok,Gold,2023-02-21
+C0096,Khon Kaen,Bronze,2024-02-06
+C0097,Bangkok,Gold,2024-05-09
+C0098,Chiang Mai,Silver,2024-04-15
+C0099,Chiang Mai,Bronze,2024-01-31
+C0100,Pattaya,Silver,2024-02-25
+C0101,Chiang Mai,Gold,2023-06-03
+C0102,Chiang Mai,Silver,2023-03-06
+C0103,Bangkok,Silver,unknown
+C0104,Bangkok,Gold,2023-01-08
+C0105,Khon Kaen,Bronze,2023-05-12
+C0106,Phuket,Gold,unknown
+C0107,Khon Kaen,Bronze,unknown
+C0108,Pattaya,Gold,2023-01-25
+C0109,Pattaya,Bronze,2023-11-07
+C0110,Phuket,Bronze,unknown
+C0111,Pattaya,Silver,2023-05-14
+C0112,Bangkok,Silver,2024-01-05
+C0113,Khon Kaen,Gold,unknown
+C0114,Chiang Mai,Gold,2024-03-22
+C0115,Bangkok,Bronze,2023-07-22
+C0116,Phuket,Gold,2023-05-12
+C0117,Bangkok,Gold,2023-06-17
+C0118,Phuket,Silver,2023-09-30
+C0119,Khon Kaen,Gold,2023-10-03
+C0120,Pattaya,Gold,2023-04-20
+C0121,Phuket,Bronze,2023-12-10
+C0122,Chiang Mai,Gold,2024-02-28
+C0123,Chiang Mai,Silver,2023-11-15
+C0124,Phuket,Gold,2024-03-03
+C0125,Khon Kaen,Silver,2023-12-08
+C0126,Pattaya,Bronze,2023-11-02
+C0127,Pattaya,Bronze,2023-09-27
+C0128,Chiang Mai,Silver,2023-11-21
+C0129,Phuket,Bronze,2024-04-14
+C0130,Bangkok,Gold,2024-03-05
+C0131,Pattaya,Bronze,2023-03-10
+C0132,Bangkok,Silver,2024-01-26
+C0133,Khon Kaen,Silver,2024-02-08
+C0134,Phuket,Silver,2023-07-10
+C0135,Phuket,Gold,2024-04-12
+C0136,Khon Kaen,Gold,2024-04-16
+C0137,Khon Kaen,Silver,2023-01-24
+C0138,Pattaya,Gold,2023-09-29
+C0139,Khon Kaen,Bronze,2023-08-30
+C0140,Phuket,Gold,2024-01-05
+C0141,Bangkok,Silver,unknown
+C0142,Phuket,Silver,2024-05-10
+C0143,Khon Kaen,Gold,2023-09-10
+C0144,Chiang Mai,Silver,2023-11-26
+C0145,Pattaya,Bronze,2023-10-14
+C0146,Pattaya,Silver,2023-03-23
+C0147,Phuket,Silver,unknown
+C0148,Khon Kaen,Bronze,2023-12-09
+C0149,Pattaya,Bronze,2024-04-11
+C0150,Chiang Mai,Gold,2023-05-13
+C0151,Chiang Mai,Silver,2023-06-16
+C0152,Khon Kaen,Silver,2023-12-19
+C0153,Khon Kaen,Silver,2023-03-16
+C0154,Pattaya,Bronze,2023-08-01
+C0155,Phuket,Bronze,2023-09-12
+C0156,Khon Kaen,Bronze,2023-11-03
+C0157,Chiang Mai,Gold,2024-02-04
+C0158,Khon Kaen,Bronze,2024-04-07
+C0159,Bangkok,Bronze,2023-01-09
+C0160,Pattaya,Bronze,2024-03-01
+C0161,Khon Kaen,Silver,2024-05-02
+C0162,Phuket,Gold,2023-08-06
+C0163,Phuket,Silver,2023-06-12
+C0164,Pattaya,Gold,2023-10-28
+C0165,Chiang Mai,Bronze,2023-08-06
+C0166,Bangkok,Silver,2023-12-14
+C0167,Pattaya,Gold,2023-11-04
+C0168,Bangkok,Silver,2024-04-06
+C0169,Khon Kaen,Bronze,2023-02-26
+C0170,Phuket,Gold,2024-01-08
+C0171,Phuket,Bronze,2023-05-24
+C0172,Khon Kaen,Gold,2023-06-12
+C0173,Chiang Mai,Bronze,2023-10-24
+C0174,Phuket,Silver,2023-06-01
+C0175,Bangkok,Silver,2023-03-06
+C0176,Bangkok,Silver,unknown
+C0177,Phuket,Silver,2023-03-13
+C0178,Pattaya,Bronze,2023-03-05
+C0179,Khon Kaen,Bronze,2024-03-10
+C0180,Pattaya,Silver,unknown
+C0181,Pattaya,Gold,2023-01-02
+C0182,Bangkok,Bronze,2023-04-28
+C0183,Khon Kaen,Silver,2023-08-13
+C0184,Phuket,Gold,2023-02-12
+C0185,Khon Kaen,Bronze,2023-11-09
+C0186,Phuket,Silver,2023-09-19
+C0187,Khon Kaen,Gold,2024-05-09
+C0188,Pattaya,Gold,2024-05-23
+C0189,Phuket,Bronze,unknown
+C0190,Bangkok,Bronze,2023-03-23
+C0191,Pattaya,Silver,2023-09-13
+C0192,Bangkok,Bronze,2024-02-21
+C0193,Phuket,Silver,2024-04-14
+C0194,Phuket,Gold,2024-02-03
+C0195,Phuket,Gold,2024-01-22
+C0196,Pattaya,Bronze,2023-07-14
+C0197,Chiang Mai,Silver,unknown
+C0198,Khon Kaen,Gold,2023-01-24
+C0199,Pattaya,Gold,2023-12-19
+C0200,Chiang Mai,Gold,2024-01-10
+C0201,Khon Kaen,Gold,2023-11-18
+C0202,Khon Kaen,Gold,2023-04-07
+C0203,Pattaya,Bronze,2023-10-06
+C0204,Khon Kaen,Gold,2024-04-09
+C0205,Chiang Mai,Bronze,2023-04-25
+C0206,Pattaya,Gold,2023-03-17
+C0207,Bangkok,Gold,unknown
+C0208,Bangkok,Gold,2023-05-17
+C0209,Phuket,Silver,2023-01-02
+C0210,Pattaya,Gold,2023-11-25
+C0211,Khon Kaen,Bronze,2023-06-18
+C0212,Phuket,Silver,2024-03-16
+C0213,Phuket,Bronze,2023-01-24
+C0214,Khon Kaen,Silver,2023-06-04
+C0215,Pattaya,Silver,2024-03-15
+C0216,Chiang Mai,Bronze,2023-07-15
+C0217,Pattaya,Silver,2023-06-06
+C0218,Khon Kaen,Gold,2023-06-13
+C0219,Chiang Mai,Silver,2024-02-17
+C0220,Chiang Mai,Silver,2024-05-22
+C0221,Bangkok,Gold,2023-04-17
+C0222,Phuket,Bronze,2024-05-20
+C0223,Bangkok,Gold,2024-01-24
+C0224,Pattaya,Gold,2023-11-03
+C0225,Bangkok,Silver,2023-01-29
+C0226,Pattaya,Bronze,unknown
+C0227,Chiang Mai,Bronze,2023-10-28
+C0228,Pattaya,Bronze,2023-09-19
+C0229,Khon Kaen,Bronze,2024-01-21
+C0230,Bangkok,Bronze,2023-09-10
+C0231,Phuket,Bronze,2023-04-16
+C0232,Chiang Mai,Bronze,unknown
+C0233,Khon Kaen,Gold,2023-09-01
+C0234,Khon Kaen,Silver,2024-05-29
+C0235,Phuket,Gold,2023-09-06
+C0236,Pattaya,Silver,2023-11-17
+C0237,Phuket,Silver,unknown
+C0238,Pattaya,Gold,unknown
+C0239,Pattaya,Silver,2023-05-22
+C0240,Chiang Mai,Gold,2023-02-27
+C0241,Pattaya,Gold,2023-09-16
+C0242,Chiang Mai,Gold,2023-02-17
+C0243,Khon Kaen,Gold,2024-04-16
+C0244,Pattaya,Silver,2024-02-24
+C0245,Phuket,Silver,2024-05-21
+C0246,Phuket,Gold,unknown
+C0247,Bangkok,Silver,2024-04-11
+C0248,Pattaya,Bronze,2023-02-09
+C0249,Khon Kaen,Bronze,2023-01-25
+C0250,Pattaya,Silver,2023-12-08
+C0251,Pattaya,Bronze,2024-01-09
+C0252,Phuket,Gold,2023-07-07
+C0253,Phuket,Silver,2023-05-02
+C0254,Chiang Mai,Silver,2023-03-12
+C0255,Bangkok,Gold,2023-08-23
+C0256,Phuket,Gold,2024-05-10
+C0257,Khon Kaen,Bronze,2023-03-13
+C0258,Bangkok,Bronze,2023-10-19
+C0259,Phuket,Silver,2023-05-24
+C0260,Phuket,Bronze,2024-03-28
+C0261,Chiang Mai,Bronze,2023-08-29
+C0262,Khon Kaen,Silver,2023-05-23
+C0263,Phuket,Bronze,2023-07-26
+C0264,Pattaya,Gold,2023-03-27
+C0265,Khon Kaen,Silver,2023-11-18
+C0266,Bangkok,Bronze,2024-01-02
+C0267,Chiang Mai,Silver,2023-02-01
+C0268,Chiang Mai,Gold,unknown
+C0269,Phuket,Gold,2023-12-22
+C0270,Pattaya,Silver,2023-05-25
+C0271,Phuket,Gold,2023-03-22
+C0272,Phuket,Gold,2023-07-02
+C0273,Phuket,Bronze,unknown
+C0274,Chiang Mai,Silver,2023-05-22
+C0275,Phuket,Bronze,2024-04-04
+C0276,Chiang Mai,Bronze,2023-08-31
+C0277,Pattaya,Silver,2023-11-16
+C0278,Pattaya,Silver,2024-04-11
+C0279,Pattaya,Bronze,2023-02-28
+C0280,Bangkok,Bronze,unknown
+C0281,Pattaya,Gold,unknown
+C0282,Khon Kaen,Bronze,2024-04-25
+C0283,Pattaya,Bronze,2023-03-17
+C0284,Bangkok,Bronze,2023-02-03
+C0285,Khon Kaen,Gold,2023-02-08
+C0286,Khon Kaen,Bronze,2023-04-11
+C0287,Pattaya,Gold,2023-01-24
+C0288,Phuket,Silver,2023-08-31
+C0289,Bangkok,Silver,2023-08-25
+C0290,Khon Kaen,Bronze,2024-02-06
+C0291,Phuket,Gold,2024-01-17
+C0292,Bangkok,Bronze,2023-04-28
+C0293,Khon Kaen,Bronze,2024-02-29
+C0294,Bangkok,Bronze,2024-05-24
+C0295,Chiang Mai,Bronze,2023-01-06
+C0296,Phuket,Silver,2023-09-14
+C0297,Chiang Mai,Gold,2024-02-11
+C0298,Pattaya,Bronze,2023-05-30
+C0299,Bangkok,Silver,2023-06-03
+C0300,Phuket,Gold,2024-04-17
+C0301,Chiang Mai,Silver,unknown
+C0302,Phuket,Gold,2023-06-30
+C0303,Chiang Mai,Gold,2023-04-19
+C0304,Khon Kaen,Silver,2023-04-25
+C0305,Bangkok,Silver,2024-03-31
+C0306,Bangkok,Gold,2023-08-23
+C0307,Pattaya,Bronze,2023-10-07
+C0308,Chiang Mai,Gold,2023-07-11
+C0309,Khon Kaen,Gold,2023-09-24
+C0310,Khon Kaen,Bronze,unknown
+C0311,Khon Kaen,Silver,2023-06-16
+C0312,Phuket,Gold,2023-11-10
+C0313,Bangkok,Silver,2024-05-28
+C0314,Phuket,Bronze,2023-03-28
+C0315,Khon Kaen,Gold,2023-11-06
+C0316,Chiang Mai,Silver,2023-08-12
+C0317,Phuket,Silver,2023-12-30
+C0318,Chiang Mai,Silver,2023-02-28
+C0319,Phuket,Silver,2024-02-26
+C0320,Khon Kaen,Silver,2024-05-28
+C0321,Bangkok,Gold,2023-04-29
+C0322,Khon Kaen,Bronze,unknown
+C0323,Phuket,Gold,2023-04-07
+C0324,Pattaya,Bronze,2023-06-01
+C0325,Pattaya,Bronze,2023-11-01
+C0326,Chiang Mai,Gold,2023-10-02
+C0327,Bangkok,Silver,2024-04-09
+C0328,Phuket,Gold,2023-02-15
+C0329,Chiang Mai,Bronze,2023-04-05
+C0330,Bangkok,Bronze,2023-06-09
+C0331,Pattaya,Silver,2024-03-16
+C0332,Bangkok,Bronze,2023-06-25
+C0333,Phuket,Silver,2023-04-30
+C0334,Phuket,Gold,2024-02-07
+C0335,Phuket,Bronze,2023-01-10
+C0336,Khon Kaen,Bronze,unknown
+C0337,Khon Kaen,Silver,2023-11-26
+C0338,Bangkok,Silver,2024-02-29
+C0339,Bangkok,Bronze,2024-03-29
+C0340,Khon Kaen,Gold,2023-10-19
+C0341,Pattaya,Silver,2023-04-21
+C0342,Pattaya,Bronze,2024-03-03
+C0343,Chiang Mai,Gold,2024-01-27
+C0344,Bangkok,Silver,2024-05-07
+C0345,Pattaya,Silver,2023-03-11
+C0346,Bangkok,Silver,2023-06-18
+C0347,Khon Kaen,Silver,2023-01-25
+C0348,Chiang Mai,Silver,2023-09-02
+C0349,Khon Kaen,Silver,2023-07-28
+C0350,Bangkok,Silver,2023-11-09
+C0351,Pattaya,Bronze,2024-01-07
+C0352,Pattaya,Bronze,2023-09-26
+C0353,Phuket,Bronze,2023-05-02
+C0354,Chiang Mai,Gold,2023-10-22
+C0355,Khon Kaen,Gold,2023-08-17
+C0356,Pattaya,Silver,2023-07-16
+C0357,Chiang Mai,Silver,2023-10-23
+C0358,Phuket,Silver,2024-04-12
+C0359,Khon Kaen,Gold,2023-04-17
+C0360,Khon Kaen,Gold,2023-02-24
+C0361,Khon Kaen,Gold,2023-04-22
+C0362,Chiang Mai,Silver,2023-01-14
+C0363,Phuket,Gold,2023-12-13
+C0364,Khon Kaen,Silver,2024-01-09
+C0365,Phuket,Silver,2023-04-12
+C0366,Pattaya,Silver,2024-01-09
+C0367,Chiang Mai,Gold,2023-02-06
+C0368,Phuket,Silver,2024-03-25
+C0369,Pattaya,Bronze,2023-05-12
+C0370,Khon Kaen,Gold,unknown
+C0371,Bangkok,Silver,2023-03-08
+C0372,Khon Kaen,Gold,2024-03-20
+C0373,Khon Kaen,Silver,2024-01-04
+C0374,Pattaya,Gold,2023-10-20
+C0375,Bangkok,Bronze,2023-06-06
+ID_001,Chiang Mai,Bronze,2023-09-14
+ID_002,Bangkok,Gold,2023-12-23
+ID_003,Bangkok,Bronze,2023-12-05
+ID_004,Pattaya,Bronze,2023-02-22
+ID_005,Bangkok,Gold,2023-12-27
+ID_006,Bangkok,Gold,2023-05-23
+ID_007,Pattaya,Bronze,2024-04-10
+ID_008,Phuket,Bronze,2023-09-22
+ID_009,Bangkok,Gold,2023-12-18
+ID_010,Phuket,Gold,2023-08-28
+ID_011,Khon Kaen,Bronze,2024-02-06
+ID_012,Phuket,Bronze,unknown
+ID_013,Pattaya,Bronze,2023-07-18
+ID_014,Khon Kaen,Silver,2024-04-20
+ID_015,Khon Kaen,Bronze,2024-04-30
+ID_016,Chiang Mai,Bronze,2023-12-19
+ID_017,Pattaya,Gold,unknown
+ID_018,Pattaya,Bronze,2023-06-23
+ID_019,Pattaya,Bronze,2023-12-21
+ID_020,Chiang Mai,Bronze,2023-01-19
+ID_021,Khon Kaen,Silver,2023-05-25
+ID_022,Khon Kaen,Silver,unknown
+ID_023,Khon Kaen,Bronze,2023-07-16
+ID_024,Chiang Mai,Bronze,2023-07-07
+ID_025,Bangkok,Bronze,unknown
+ID_026,Phuket,Bronze,2023-06-01
+ID_027,Khon Kaen,Gold,2024-02-19
+ID_028,Chiang Mai,Bronze,2023-07-29
+ID_029,Pattaya,Bronze,2023-12-28
+ID_030,Bangkok,Silver,2023-02-28
+ID_031,Phuket,Gold,2023-12-27
+ID_032,Khon Kaen,Silver,2024-01-29
+ID_033,Pattaya,Bronze,unknown
+ID_034,Phuket,Bronze,2023-02-16
+ID_035,Phuket,Silver,2023-05-28
+ID_036,Pattaya,Gold,2023-01-13
+ID_037,Pattaya,Gold,2023-09-11
+ID_038,Phuket,Silver,2024-02-06
+ID_039,Phuket,Bronze,2023-06-25
+ID_040,Khon Kaen,Gold,2024-01-23
+ID_041,Khon Kaen,Bronze,2023-10-04
+ID_042,Phuket,Bronze,2023-08-05
+ID_043,Bangkok,Gold,2023-01-10
+ID_044,Khon Kaen,Silver,2024-02-22
+ID_045,Phuket,Silver,2023-05-05
+ID_046,Phuket,Gold,2023-09-20
+ID_047,Pattaya,Silver,2023-02-06
+ID_048,Bangkok,Bronze,2023-08-26
+ID_049,Phuket,Gold,2023-05-10
+ID_050,Pattaya,Silver,2023-11-22
+ID_051,Khon Kaen,Bronze,2023-09-14
+ID_052,Chiang Mai,Bronze,2024-02-10
+ID_053,Bangkok,Gold,2024-02-17
+ID_054,Pattaya,Gold,2023-09-09
+ID_055,Pattaya,Gold,2024-03-02
+ID_056,Pattaya,Gold,2023-04-16
+ID_057,Phuket,Bronze,2023-12-04
+ID_058,Phuket,Gold,2024-04-21
+ID_059,Bangkok,Bronze,2023-10-17
+ID_060,Khon Kaen,Silver,2023-05-15
+ID_061,Chiang Mai,Gold,2023-02-10
+ID_062,Chiang Mai,Gold,2023-05-02
+ID_063,Bangkok,Bronze,2024-05-14
+ID_064,Khon Kaen,Gold,2023-11-13
+ID_065,Phuket,Gold,2023-10-12
+ID_066,Bangkok,Gold,2023-05-14
+ID_067,Phuket,Gold,2023-04-16
+ID_068,Phuket,Bronze,2024-04-14
+ID_069,Bangkok,Gold,2023-06-08
+ID_070,Chiang Mai,Bronze,2023-03-17
+ID_071,Phuket,Gold,2023-04-15
+ID_072,Chiang Mai,Gold,2023-02-20
+ID_073,Bangkok,Silver,2023-10-09
+ID_074,Pattaya,Gold,2023-09-01
+ID_075,Chiang Mai,Bronze,2023-03-26
+ID_076,Phuket,Silver,2023-10-20
+ID_077,Pattaya,Bronze,2024-05-20
+ID_078,Phuket,Silver,2023-08-14
+ID_079,Khon Kaen,Bronze,2024-03-23
+ID_080,Khon Kaen,Bronze,2023-10-11
+ID_081,Bangkok,Silver,2023-12-24
+ID_082,Pattaya,Bronze,2024-05-10
+ID_083,Chiang Mai,Bronze,2024-02-08
+ID_084,Phuket,Gold,2024-01-19
+ID_085,Chiang Mai,Silver,2023-12-25
+ID_086,Phuket,Bronze,2024-04-13
+ID_087,Pattaya,Silver,2023-09-29
+ID_088,Phuket,Silver,2023-05-21
+ID_089,Khon Kaen,Silver,2024-03-06
+ID_090,Khon Kaen,Bronze,2023-03-25
+ID_091,Bangkok,Silver,unknown
+ID_092,Pattaya,Bronze,2024-05-10
+ID_093,Chiang Mai,Silver,2023-11-17
+ID_094,Bangkok,Bronze,2023-02-19
+ID_095,Pattaya,Silver,2024-05-25
+ID_096,Bangkok,Silver,2024-05-13
+ID_097,Pattaya,Gold,2023-05-30
+ID_098,Bangkok,Gold,2024-03-18
+ID_099,Chiang Mai,Bronze,2023-08-21
+ID_100,Pattaya,Silver,2024-03-13
+ID_101,Chiang Mai,Silver,2023-04-18
+ID_102,Chiang Mai,Gold,2023-05-21
+ID_103,Bangkok,Bronze,2024-03-02
+ID_104,Bangkok,Gold,2023-12-31
+ID_105,Bangkok,Bronze,2023-06-16
+ID_106,Phuket,Bronze,2023-11-19
+ID_107,Khon Kaen,Silver,2023-12-22
+ID_108,Khon Kaen,Gold,2023-02-06
+ID_109,Khon Kaen,Silver,2023-04-25
+ID_110,Bangkok,Gold,2023-12-21
+ID_111,Bangkok,Gold,2023-05-07
+ID_112,Chiang Mai,Silver,unknown
+ID_113,Phuket,Silver,2023-10-09
+ID_114,Chiang Mai,Gold,2023-09-25
+ID_115,Phuket,Bronze,2024-01-05
+ID_116,Chiang Mai,Silver,2023-06-16
+ID_117,Chiang Mai,Bronze,2024-02-16
+ID_118,Phuket,Bronze,2024-04-24
+ID_119,Phuket,Silver,2023-10-29
+ID_120,Khon Kaen,Gold,2023-06-01
+ID_121,Chiang Mai,Silver,2024-02-13
+ID_122,Chiang Mai,Silver,2023-07-11
+ID_123,Khon Kaen,Gold,2024-03-04
+ID_124,Phuket,Gold,2023-11-01
+ID_125,Khon Kaen,Gold,2024-05-05
+ID_126,Phuket,Silver,2023-10-22
+ID_127,Bangkok,Silver,2023-04-28
+ID_128,Bangkok,Silver,2023-06-16
+ID_129,Khon Kaen,Silver,2023-08-11
+ID_130,Chiang Mai,Silver,2024-01-25
+ID_131,Pattaya,Bronze,2024-02-25
+ID_132,Phuket,Gold,unknown
+ID_133,Chiang Mai,Gold,2024-03-07
+ID_134,Pattaya,Gold,unknown
+ID_135,Khon Kaen,Silver,2023-01-19
+ID_136,Chiang Mai,Gold,2023-12-23
+ID_137,Khon Kaen,Gold,2024-03-06
+ID_138,Khon Kaen,Bronze,2023-03-27
+ID_139,Khon Kaen,Gold,2024-05-31
+ID_140,Khon Kaen,Gold,2023-02-13
+ID_141,Phuket,Gold,2023-07-06
+ID_142,Khon Kaen,Silver,2023-12-11
+ID_143,Chiang Mai,Bronze,2023-12-22
+ID_144,Chiang Mai,Bronze,2023-07-17
+ID_145,Bangkok,Silver,2023-11-19
+ID_146,Pattaya,Bronze,2023-08-07
+ID_147,Bangkok,Gold,2023-11-04
+ID_148,Bangkok,Gold,2023-01-22
+ID_149,Khon Kaen,Silver,2023-08-07
+ID_150,Phuket,Gold,2024-02-20
+ID_151,Bangkok,Gold,2023-08-02
+ID_152,Pattaya,Silver,2024-05-04
+ID_153,Pattaya,Silver,2023-10-29
+ID_154,Bangkok,Bronze,2024-01-28
+ID_155,Bangkok,Silver,2023-05-16
+ID_156,Phuket,Gold,2023-04-06
+ID_157,Phuket,Gold,2023-05-18
+ID_158,Pattaya,Silver,2024-02-19
+ID_159,Khon Kaen,Silver,2023-07-17
+ID_160,Bangkok,Gold,2023-04-13
+ID_161,Pattaya,Silver,unknown
+ID_162,Phuket,Silver,2023-01-05
+ID_163,Chiang Mai,Gold,2023-03-06
+ID_164,Chiang Mai,Bronze,2024-04-27
+ID_165,Chiang Mai,Bronze,2023-03-16
+ID_166,Pattaya,Silver,2023-06-10
+ID_167,Chiang Mai,Silver,2023-06-29
+ID_168,Chiang Mai,Bronze,2023-06-12
+ID_169,Bangkok,Gold,2023-07-23
+ID_170,Khon Kaen,Silver,2023-08-22
+ID_171,Chiang Mai,Gold,2023-11-17
+ID_172,Khon Kaen,Silver,2023-01-20
+ID_173,Khon Kaen,Gold,2024-05-15
+ID_174,Bangkok,Bronze,unknown
+ID_175,Bangkok,Silver,unknown
+ID_176,Chiang Mai,Silver,2024-03-14
+ID_177,Phuket,Silver,2023-08-13
+ID_178,Khon Kaen,Bronze,2023-02-08
+ID_179,Pattaya,Bronze,unknown
+ID_180,Bangkok,Silver,2023-08-22
+ID_181,Khon Kaen,Silver,unknown
+ID_182,Bangkok,Bronze,2023-01-26
+ID_183,Khon Kaen,Gold,unknown
+ID_184,Khon Kaen,Silver,2023-05-23
+ID_185,Pattaya,Silver,2024-03-04
+ID_186,Bangkok,Gold,2023-05-10
+ID_187,Phuket,Gold,2024-02-11
+ID_188,Pattaya,Bronze,2023-03-24
+ID_189,Chiang Mai,Bronze,2023-05-01
+ID_190,Phuket,Bronze,2024-02-06
+ID_191,Pattaya,Gold,2023-05-07
+ID_192,Pattaya,Silver,2023-05-10
+ID_193,Phuket,Gold,unknown
+ID_194,Khon Kaen,Gold,2023-04-17
+ID_195,Pattaya,Gold,2024-05-31
+ID_196,Pattaya,Silver,2023-07-30
+ID_197,Khon Kaen,Gold,2024-03-08
+ID_198,Bangkok,Bronze,2023-01-22
+ID_199,Pattaya,Silver,2023-11-01
+ID_200,Khon Kaen,Silver,2024-05-05
+ID_201,Phuket,Gold,2023-12-25
+ID_202,Pattaya,Bronze,2024-05-08
+ID_203,Pattaya,Silver,unknown
+ID_204,Khon Kaen,Silver,2024-02-27
+ID_205,Chiang Mai,Bronze,2023-03-17
+ID_206,Chiang Mai,Gold,2023-01-04
+ID_207,Pattaya,Gold,2023-10-19
+ID_208,Chiang Mai,Bronze,2023-04-23
+ID_209,Pattaya,Silver,2023-01-26
+ID_210,Phuket,Silver,2023-08-27
+ID_211,Khon Kaen,Bronze,2023-04-02
+ID_212,Bangkok,Bronze,2023-10-17
+ID_213,Pattaya,Silver,2023-07-21
+ID_214,Khon Kaen,Silver,2023-09-22
+ID_215,Bangkok,Bronze,2023-11-10
+ID_216,Bangkok,Gold,2024-02-02
+ID_217,Khon Kaen,Bronze,2023-08-22
+ID_218,Pattaya,Gold,2023-05-16
+ID_219,Pattaya,Gold,unknown
+ID_220,Phuket,Silver,2023-10-02
+ID_221,Chiang Mai,Bronze,unknown
+ID_222,Khon Kaen,Silver,2024-04-17
+ID_223,Bangkok,Silver,unknown
+ID_224,Pattaya,Silver,2024-02-01
+ID_225,Phuket,Silver,2023-07-22
+ID_226,Chiang Mai,Gold,2023-04-12
+ID_227,Khon Kaen,Bronze,2023-03-03
+ID_228,Phuket,Silver,unknown
+ID_229,Chiang Mai,Silver,2024-04-16
+ID_230,Phuket,Silver,2024-01-06
+ID_231,Bangkok,Silver,2024-01-17
+ID_232,Bangkok,Gold,2024-02-07
+ID_233,Khon Kaen,Silver,2023-03-04
+ID_234,Khon Kaen,Gold,2024-05-19
+ID_235,Khon Kaen,Bronze,2023-02-20
+ID_236,Bangkok,Silver,2023-02-21
+ID_237,Bangkok,Bronze,2024-05-20
+ID_238,Phuket,Gold,2023-02-19
+ID_239,Phuket,Bronze,2023-05-28
+ID_240,Phuket,Bronze,2024-01-15
+ID_241,Pattaya,Silver,2023-07-24
+ID_242,Chiang Mai,Silver,2023-03-09
+ID_243,Phuket,Bronze,2023-12-18
+ID_244,Phuket,Silver,2024-02-24
+ID_245,Bangkok,Gold,2023-12-06
+ID_246,Pattaya,Silver,unknown
+ID_247,Bangkok,Bronze,2023-05-13
+ID_248,Khon Kaen,Bronze,2024-03-08
+ID_249,Phuket,Gold,2024-02-04
+ID_250,Khon Kaen,Gold,2023-01-22
+ID_251,Bangkok,Bronze,2023-11-19
+ID_252,Khon Kaen,Silver,2023-12-22
+ID_253,Bangkok,Silver,2024-01-09
+ID_254,Bangkok,Silver,2024-01-26
+ID_255,Khon Kaen,Bronze,2023-07-16
+ID_256,Khon Kaen,Bronze,2024-03-21
+ID_257,Pattaya,Bronze,2023-06-19
+ID_258,Khon Kaen,Bronze,2023-10-16
+ID_259,Bangkok,Silver,2023-12-17
+ID_260,Chiang Mai,Bronze,unknown
+ID_261,Pattaya,Bronze,2023-03-27
+ID_262,Chiang Mai,Bronze,2024-01-02
+ID_263,Chiang Mai,Silver,2023-06-11
+ID_264,Khon Kaen,Bronze,unknown
+ID_265,Khon Kaen,Bronze,2023-09-09
+ID_266,Khon Kaen,Bronze,unknown
+ID_267,Chiang Mai,Bronze,2024-05-20
+ID_268,Pattaya,Gold,2023-04-29
+ID_269,Bangkok,Gold,2023-02-16
+ID_270,Khon Kaen,Silver,2023-04-06
+ID_271,Pattaya,Silver,2023-08-02
+ID_272,Pattaya,Bronze,2024-03-30
+ID_273,Chiang Mai,Bronze,2023-03-09
+ID_274,Khon Kaen,Gold,2024-01-21
+ID_275,Chiang Mai,Gold,2024-04-07
+ID_276,Bangkok,Silver,2023-09-07
+ID_277,Chiang Mai,Gold,2024-04-21
+ID_278,Bangkok,Gold,2023-04-13
+ID_279,Chiang Mai,Bronze,2023-07-02
+ID_280,Pattaya,Silver,2024-05-06
+ID_281,Phuket,Gold,2023-11-22
+ID_282,Chiang Mai,Bronze,2023-08-13
+ID_283,Chiang Mai,Silver,unknown
+ID_284,Khon Kaen,Silver,unknown
+ID_285,Chiang Mai,Silver,2023-12-16
+ID_286,Bangkok,Gold,2024-05-18
+ID_287,Bangkok,Bronze,2023-03-03
+ID_288,Khon Kaen,Silver,2024-04-08
+ID_289,Khon Kaen,Gold,2024-01-24
+ID_290,Bangkok,Silver,2023-03-07
+ID_291,Phuket,Silver,2024-05-04
+ID_292,Phuket,Bronze,2023-02-28
+ID_293,Khon Kaen,Bronze,2024-03-25
+ID_294,Khon Kaen,Gold,unknown
+ID_295,Phuket,Gold,2023-07-17
+ID_296,Bangkok,Gold,2023-07-08
+ID_297,Pattaya,Gold,2023-11-17
+ID_298,Bangkok,Bronze,2024-04-28
+ID_299,Phuket,Silver,2023-10-16
+ID_300,Khon Kaen,Silver,2024-02-16
+ID_301,Pattaya,Bronze,2023-04-01
+ID_302,Bangkok,Bronze,2023-05-03
+ID_303,Phuket,Bronze,2024-03-05
+ID_304,Bangkok,Bronze,2023-03-16
+ID_305,Khon Kaen,Silver,2023-07-27
+ID_306,Phuket,Gold,2023-01-29
+ID_307,Chiang Mai,Silver,2023-05-09
+ID_308,Pattaya,Bronze,2023-06-15
+ID_309,Chiang Mai,Bronze,2023-10-02
+ID_310,Phuket,Gold,2024-03-09
+ID_311,Pattaya,Gold,2024-04-07
+ID_312,Chiang Mai,Silver,2024-02-11
+ID_313,Phuket,Gold,2023-12-30
+ID_314,Phuket,Silver,2023-09-20
+ID_315,Bangkok,Bronze,2024-02-03
+ID_316,Pattaya,Gold,2023-08-25
+ID_317,Khon Kaen,Bronze,2023-10-04
+ID_318,Chiang Mai,Silver,2023-03-15
+ID_319,Pattaya,Bronze,2023-04-21
+ID_320,Bangkok,Silver,2023-05-10
+ID_321,Chiang Mai,Silver,unknown
+ID_322,Khon Kaen,Silver,2023-03-29
+ID_323,Chiang Mai,Gold,2023-12-22
+ID_324,Khon Kaen,Bronze,2023-06-01
+ID_325,Khon Kaen,Gold,2023-01-27
+ID_326,Bangkok,Gold,2023-10-02
+ID_327,Phuket,Bronze,2023-06-07
+ID_328,Bangkok,Bronze,2023-08-24
+ID_329,Pattaya,Silver,2023-10-18
+ID_330,Chiang Mai,Silver,2023-08-08
+ID_331,Pattaya,Silver,2023-03-11
+ID_332,Khon Kaen,Bronze,2024-01-12
+ID_333,Bangkok,Silver,2023-01-23
+ID_334,Chiang Mai,Gold,2023-07-25
+ID_335,Phuket,Silver,2023-07-22
+ID_336,Bangkok,Bronze,2023-05-29
+ID_337,Chiang Mai,Silver,unknown
+ID_338,Pattaya,Silver,2024-05-10
+ID_339,Phuket,Gold,2023-07-15
+ID_340,Phuket,Gold,2023-05-01
+ID_341,Chiang Mai,Silver,2024-01-04
+ID_342,Pattaya,Silver,2024-01-10
+ID_343,Bangkok,Bronze,2023-05-14
+ID_344,Pattaya,Gold,2024-04-17
+ID_345,Khon Kaen,Bronze,2023-08-28
+ID_346,Phuket,Silver,2024-03-28
+ID_347,Pattaya,Bronze,2023-06-14
+ID_348,Pattaya,Silver,2024-01-07
+ID_349,Phuket,Gold,2023-12-20
+ID_350,Chiang Mai,Bronze,2023-12-17
+ID_351,Chiang Mai,Bronze,unknown
+ID_352,Phuket,Silver,2023-02-06
+ID_353,Pattaya,Bronze,2024-01-22
+ID_354,Phuket,Silver,unknown
+ID_355,Pattaya,Silver,2024-04-20
+ID_356,Khon Kaen,Silver,unknown
+ID_357,Chiang Mai,Silver,2023-10-20
+ID_358,Pattaya,Gold,2023-01-03
+ID_359,Phuket,Gold,2023-05-01
+ID_360,Pattaya,Gold,2023-09-07
+ID_361,Bangkok,Gold,2024-04-13
+ID_362,Chiang Mai,Gold,2023-03-29
+ID_363,Khon Kaen,Gold,2023-01-20
+ID_364,Khon Kaen,Silver,unknown
+ID_365,Chiang Mai,Gold,2023-04-11
+ID_366,Chiang Mai,Bronze,unknown
+ID_367,Pattaya,Bronze,2024-01-12
+ID_368,Pattaya,Gold,2023-08-01
+ID_369,Phuket,Gold,2024-02-23
+ID_370,Chiang Mai,Gold,2024-01-30
+ID_371,Phuket,Bronze,2023-07-23
+ID_372,Bangkok,Bronze,unknown
+ID_373,Khon Kaen,Gold,2023-01-18
+ID_374,Pattaya,Bronze,2024-02-29
+ID_375,Khon Kaen,Bronze,2023-12-19
+ID_323,Chiang Mai,Gold,2023-12-22
+C0219,Chiang Mai,Silver,2024-02-17
+C0354,Chiang Mai,Gold,2023-10-22
+ID_372,Bangkok,Bronze,unknown
+C0194,Phuket,Gold,2024-02-03
