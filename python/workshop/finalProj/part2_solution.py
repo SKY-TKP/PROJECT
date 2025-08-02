@@ -1,3 +1,7 @@
+# ==================================================================
+# เฉลยของคำถามชุดที่ 2: Machine Learning Model
+# ==================================================================
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
