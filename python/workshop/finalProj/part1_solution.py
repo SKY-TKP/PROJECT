@@ -1,3 +1,7 @@
+# ==================================================================
+# เฉลยของคำถามชุดที่ 1: Data Analysis and Visualization
+# ==================================================================
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
