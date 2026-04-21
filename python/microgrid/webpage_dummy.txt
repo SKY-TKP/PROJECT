@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microgrid Decision Support System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-helper: #94a3b8;
+            --border: #e2e8f0;
+            --accent: #3b82f6;
+            
+            /* Chart Colors */
+            --c-solar: #fde047;
+            --c-grid: #cbd5e1;
+            --c-batt: #f97316;
+            --c-soc: #14b8a6;
+            --c-demand: #1e293b;
+            --c-danger: #ef4444;
+            --c-success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 40px;
+            line-height: 1.5;
+        }
+
+        header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 600; margin: 0; letter-spacing: -0.5px;}
+        p.subtitle { color: var(--text-muted); font-size: 0.9rem; margin: 5px 0 0 0; }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+        }
+
+        /* --- Minimal Controls --- */
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            background: var(--bg-surface);
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        label { font-size: 0.8rem; font-weight: 600; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px;}
+        .value-display { font-size: 0.9rem; color: var(--accent); font-family: monospace; font-weight: 600;}
+        .helper-text { font-size: 0.75rem; color: var(--text-helper); margin-top: 6px; line-height: 1.4;}
+
+        select, input[type="range"] {
+            width: 100%;
+            background: transparent;
+            margin-top: 4px;
+        }
+
+        select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Minimal Slider styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .divider { height: 1px; background: var(--border); margin: 5px 0; }
+
+        .btn-reset {
+            padding: 12px;
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        .btn-reset:hover { background: var(--border); }
+
+        /* --- Right Panel Visuals --- */
+        .visuals-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Minimal Metrics */
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .metric {
+            background: var(--bg-surface);
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            border-top: 3px solid var(--accent);
+        }
+        .metric.danger { border-top-color: var(--c-danger); }
+        .metric.success { border-top-color: var(--c-success); }
+        
+        .metric-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;}
+        .metric-value { font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-top: 8px; line-height: 1;}
+        .metric-unit { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); margin-left: 4px;}
+
+        /* Dynamic Insight Box */
+        .insight-box {
+            padding: 16px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid transparent;
+        }
+        .insight-warning { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+        .insight-success { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+        .insight-neutral { background: #f8fafc; border-color: #e2e8f0; color: #334155; }
+        .insight-box strong { font-weight: 600; margin-right: 5px; }
+
+        /* Charts */
+        .chart-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            height: 400px;
+        }
+
+        .bottom-charts {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .donut-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+        .box-title { font-size: 0.85rem; font-weight: 600; margin-top: 0; margin-bottom: 15px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
+
+        @media (max-width: 1024px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .metrics-container { grid-template-columns: repeat(2, 1fr); }
+            body { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Microgrid Decision Support System</h1>
+        <p class="subtitle">Interactive Surgical Peak Shaving & Lifecycle Cost Model</p>
+    </header>
+
+    <div class="dashboard">
+        
+        <aside class="controls-section">
+            <div class="control-group">
+                <div class="control-header">
+                    <label>Scenario</label>
+                </div>
+                <select id="paramScenario">
+                    <option value="sunny">Typical Day (Sunny)</option>
+                    <option value="cloudy">Cloudy Day (Monsoon)</option>
+                    <option value="extreme">Extreme Heat (High Load)</option>
+                </select>
+                <div class="helper-text">Defines the baseline load profile and available solar irradiance.</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label>Solar PV (kW)</label>
+                    <span class="value-display" id="valSolar">3366</span>
+                </div>
+                <input type="range" id="paramSolar" min="0" max="6000" step="10" value="3366">
+                <div class="helper-text">Larger capacity reduces daytime grid reliance and charges the battery faster, but yields diminishing returns if it exceeds load.</div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label>Battery Capacity (kWh)</label>
+                    <span class="value-display" id="valBatt">248</span>
+                </div>
+                <input type="range" id="paramBatt" min="0" max="1000" step="5" value="248">
+                <div class="helper-text">Higher capacity sustains peak shaving longer. Lower capacity risks depletion before the peak period ends.</div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label>Peak Target Limit (kW)</label>
+                    <span class="value-display" id="valLimit">850</span>
+                </div>
+                <input type="range" id="paramLimit" min="500" max="1000" step="10" value="850">
+                <div class="helper-text">Forces battery to discharge when net demand exceeds this limit. Setting it too low depletes the battery rapidly.</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label>Demand Charge (THB/kW)</label>
+                    <span class="value-display" id="valDemandRate">130</span>
+                </div>
+                <input type="range" id="paramDemandRate" min="50" max="300" step="5" value="130">
+                <div class="helper-text">The penalty rate for the single highest grid spike. Higher rates make peak shaving financially critical.</div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label>Degradation Cost (THB/kWh)</label>
+                    <span class="value-display" id="valDegRate">3.5</span>
+                </div>
+                <input type="range" id="paramDegRate" min="0.5" max="10.0" step="0.5" value="3.5">
+                <div class="helper-text">The wear-and-tear cost per cycle. High degradation limits the economic viability of energy arbitrage.</div>
+            </div>
+
+            <button class="btn-reset" onclick="resetParams()">Restore Defaults</button>
+        </aside>
+
+        <section class="visuals-section">
+            
+            <div class="metrics-container">
+                <div class="metric" id="metricCardPeak">
+                    <div class="metric-title">Actual Grid Peak</div>
+                    <div class="metric-value"><span id="txtGridPeak">0</span><span class="metric-unit">kW</span></div>
+                </div>
+                <div class="metric">
+                    <div class="metric-title">End-of-Day SOC</div>
+                    <div class="metric-value"><span id="txtSOC">0</span><span class="metric-unit">%</span></div>
+                </div>
+                <div class="metric">
+                    <div class="metric-title">Degradation Cost</div>
+                    <div class="metric-value"><span id="txtDegCost">0</span></div>
+                </div>
+                <div class="metric">
+                    <div class="metric-title">Demand Charge Penalty</div>
+                    <div class="metric-value"><span id="txtDemandCost">0</span></div>
+                </div>
+            </div>
+
+            <div id="dynamicInsight" class="insight-box insight-neutral">
+                <strong>System Status:</strong> Initializing model...
+            </div>
+
+            <div class="chart-box">
+                <canvas id="dispatchChart"></canvas>
+            </div>
+
+            <div class="bottom-charts">
+                <div class="donut-box">
+                    <div class="box-title">Daily OPEX Breakdown (Peak Control)</div>
+                    <div style="flex:1; position:relative;">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        // --- System Data ---
+        const hours = Array.from({length: 24}, (_, i) => i.toString().padStart(2, '0') + ":00");
+        
+        // Base Load Profiles
+        const baseDemand = [450, 420, 400, 420, 480, 550, 650, 750, 800, 820, 800, 750, 780, 800, 850, 880, 950, 980, 850, 700, 600, 500, 450, 420];
+        const extremeDemand = baseDemand.map(d => d + 60); 
+        
+        // Base Solar Profiles (Normalized to 3365.92 kW Base Capacity)
+        const baseSolarSunny = [0,0,0,0,0,0, 50, 200, 450, 650, 800, 850, 800, 650, 450, 200, 50, 0,0,0,0,0,0,0];
+        const baseSolarCloudy = [0,0,0,0,0,0, 20, 80, 150, 250, 300, 320, 300, 250, 150, 80, 20, 0,0,0,0,0,0,0];
+        const BASE_SOLAR_KW = 3365.92;
+
+        let dispatchChart = null;
+        let costChart = null;
+
+        // --- Core Simulation ---
+        function runSimulation() {
+            // Get inputs
+            const scenario = document.getElementById('paramScenario').value;
+            const capSolar = parseFloat(document.getElementById('paramSolar').value);
+            const capBatt = parseFloat(document.getElementById('paramBatt').value);
+            const peakLimit = parseFloat(document.getElementById('paramLimit').value);
+            const rateDemand = parseFloat(document.getElementById('paramDemandRate').value);
+            const rateDeg = parseFloat(document.getElementById('paramDegRate').value);
+
+            // Update DOM text
+            document.getElementById('valSolar').innerText = capSolar.toFixed(0);
+            document.getElementById('valBatt').innerText = capBatt.toFixed(0);
+            document.getElementById('valLimit').innerText = peakLimit;
+            document.getElementById('valDemandRate').innerText = rateDemand;
+            document.getElementById('valDegRate').innerText = rateDeg.toFixed(1);
+
+            // Select Load & Solar
+            const loadData = (scenario === 'extreme') ? extremeDemand : baseDemand;
+            const rawSolar = (scenario === 'cloudy') ? baseSolarCloudy : baseSolarSunny;
+            
+            // Scale solar based on user input
+            const solarFactor = capSolar / BASE_SOLAR_KW;
+            const solarData = rawSolar.map(s => s * solarFactor);
+
+            // Arrays for charting
+            let gridDraw = [], solarUsedDraw = [], battDischargeDraw = [], socDraw = [];
+            
+            let currentSOC = 0;
+            let actualPeak = 0;
+            let totalDischarge = 0;
+
+            // Physics Engine (Hourly)
+            for (let i = 0; i < 24; i++) {
+                let s = solarData[i];
+                let d = loadData[i];
+                
+                // 1. Charge Battery from excess solar
+                let excessSolar = Math.max(0, s - d);
+                let charge = Math.min(excessSolar, capBatt - currentSOC);
+                currentSOC += charge;
+                
+                let s_used = Math.min(d, s);
+                solarUsedDraw.push(s_used);
+                
+                let netDemand = d - s_used;
+                let discharge = 0;
+                let g = netDemand;
+
+                // 2. Discharge Battery for Peak Shaving
+                if (netDemand > peakLimit) {
+                    let reqDischarge = netDemand - peakLimit;
+                    discharge = Math.min(reqDischarge, currentSOC); 
+                    currentSOC -= discharge;
+                    g = netDemand - discharge;
+                    totalDischarge += discharge;
+                }
+                
+                battDischargeDraw.push(discharge);
+                gridDraw.push(g);
+                socDraw.push(capBatt > 0 ? (currentSOC / capBatt) * 100 : 0);
+
+                if (g > actualPeak) actualPeak = g;
+            }
+
+            // Economics
+            const costDemand = actualPeak * rateDemand;
+            const costDeg = totalDischarge * rateDeg;
+
+            // Update Metrics
+            document.getElementById('txtGridPeak').innerText = actualPeak.toFixed(0);
+            document.getElementById('txtSOC').innerText = socDraw[23].toFixed(1);
+            document.getElementById('txtDegCost').innerText = costDeg.toLocaleString(undefined, {maximumFractionDigits:0});
+            document.getElementById('txtDemandCost').innerText = costDemand.toLocaleString(undefined, {maximumFractionDigits:0});
+
+            // Update Dynamic Insight Box and Card Styling
+            const peakCard = document.getElementById('metricCardPeak');
+            const insightBox = document.getElementById('dynamicInsight');
+
+            if (capBatt === 0) {
+                peakCard.className = 'metric';
+                insightBox.className = 'insight-box insight-neutral';
+                insightBox.innerHTML = "<strong>System Idle:</strong> Battery capacity is set to 0. The grid absorbs the full net demand, resulting in maximum potential demand charges.";
+                document.getElementById('txtGridPeak').style.color = 'var(--text-main)';
+            }
+            else if (actualPeak > peakLimit + 0.1) {
+                peakCard.className = 'metric danger';
+                insightBox.className = 'insight-box insight-warning';
+                insightBox.innerHTML = `<strong>Capacity Warning:</strong> The battery depleted before the high-demand period ended. The grid spiked to ${actualPeak.toFixed(0)} kW, breaking the target threshold and incurring higher penalties. Consider increasing battery capacity or raising the target limit.`;
+                document.getElementById('txtGridPeak').style.color = 'var(--c-danger)';
+            } else if (totalDischarge === 0) {
+                peakCard.className = 'metric';
+                insightBox.className = 'insight-box insight-neutral';
+                insightBox.innerHTML = "<strong>System Standby:</strong> The net demand never exceeded the Target Peak Limit. The battery remained fully charged and was not required to discharge today.";
+                document.getElementById('txtGridPeak').style.color = 'var(--text-main)';
+            } else {
+                peakCard.className = 'metric success';
+                insightBox.className = 'insight-box insight-success';
+                insightBox.innerHTML = `<strong>Optimal Operation:</strong> Successful surgical peak shaving. The battery perfectly maintained the grid draw below the ${peakLimit} kW target, protecting the facility from excess demand charges.`;
+                document.getElementById('txtGridPeak').style.color = 'var(--c-success)';
+            }
+
+            renderDispatchChart(gridDraw, solarUsedDraw, battDischargeDraw, loadData, socDraw, peakLimit);
+            renderCostChart(costDemand, costDeg);
+        }
+
+        // --- Charting ---
+        function renderDispatchChart(grid, solar, battery, demand, soc, limit) {
+            const ctx = document.getElementById('dispatchChart').getContext('2d');
+            if (dispatchChart) dispatchChart.destroy();
+
+            Chart.defaults.font.family = 'Inter';
+            Chart.defaults.color = '#94a3b8';
+
+            dispatchChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: hours,
+                    datasets: [
+                        {
+                            label: 'Solar Direct Use',
+                            data: solar,
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(253, 224, 71, 0.7)', // c-solar
+                            fill: true,
+                            yAxisID: 'y',
+                            pointRadius: 0,
+                            order: 4
+                        },
+                        {
+                            label: 'Grid Power',
+                            data: grid,
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(226, 232, 240, 0.8)', // c-grid
+                            fill: '-1',
+                            yAxisID: 'y',
+                            pointRadius: 0,
+                            order: 3
+                        },
+                        {
+                            label: 'Battery Discharge',
+                            data: battery,
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(249, 115, 22, 0.85)', // c-batt
+                            fill: '-1',
+                            yAxisID: 'y',
+                            pointRadius: 0,
+                            order: 2
+                        },
+                        {
+                            label: 'Total Demand',
+                            data: demand,
+                            borderColor: '#1e293b',
+                            borderWidth: 1.5,
+                            borderDash: [4, 4],
+                            fill: false,
+                            yAxisID: 'y',
+                            pointRadius: 0,
+                            order: 1
+                        },
+                        {
+                            label: 'Target Limit',
+                            data: Array(24).fill(limit),
+                            borderColor: '#ef4444',
+                            borderWidth: 1,
+                            borderDash: [2, 2],
+                            fill: false,
+                            yAxisID: 'y',
+                            pointRadius: 0,
+                            order: 0
+                        },
+                        {
+                            label: 'SOC % (Right)',
+                            data: soc,
+                            borderColor: '#14b8a6',
+                            borderWidth: 2,
+                            fill: false,
+                            yAxisID: 'y1',
+                            tension: 0.3,
+                            pointRadius: 0,
+                            order: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: { usePointStyle: true, boxWidth: 6, font: {size: 11} }
+                        },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.95)', padding: 12, cornerRadius: 6, titleFont: {size: 13}, bodyFont: {size: 12} }
+                    },
+                    scales: {
+                        y: { 
+                            stacked: true, 
+                            position: 'left', 
+                            title: { display: true, text: 'Power (kW)', font: {weight: 500} },
+                            grid: { color: '#f1f5f9', drawBorder: false }
+                        },
+                        y1: { 
+                            position: 'right', 
+                            min: 0, max: 100,
+                            title: { display: true, text: 'SOC %', font: {weight: 500} },
+                            grid: { display: false }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { maxRotation: 0 }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderCostChart(demandCost, battCost) {
+            const ctx = document.getElementById('costChart').getContext('2d');
+            if (costChart) costChart.destroy();
+
+            const total = demandCost + battCost;
+            const data = total > 0 ? [demandCost, battCost] : [1];
+            const bgColors = total > 0 ? ['#cbd5e1', '#f97316'] : ['#f8fafc'];
+            const labels = total > 0 ? ['Demand Penalty', 'Battery Degradation'] : ['None'];
+
+            costChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: bgColors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 6, font: {size: 12} } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    if (total === 0) return ' 0 THB';
+                                    return ' ' + ctx.raw.toLocaleString() + ' THB';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetParams() {
+            document.getElementById('paramScenario').value = 'sunny';
+            document.getElementById('paramSolar').value = 3366;
+            document.getElementById('paramBatt').value = 248;
+            document.getElementById('paramLimit').value = 850;
+            document.getElementById('paramDemandRate').value = 130;
+            document.getElementById('paramDegRate').value = 3.5;
+            runSimulation();
+        }
+
+        // --- Init ---
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('input', runSimulation);
+        });
+
+        window.onload = runSimulation;
+    </script>
+</body>
+</html>
