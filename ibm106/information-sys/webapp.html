@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+      :root {
+        --company-primary: #2d6a4f; 
+        --company-secondary: #fefae0;
+        --company-dark: #1b4332;
+        --company-accent: #e63946;
+        --glass-bg: rgba(255, 255, 255, 0.92);
+        --glass-border: rgba(255, 255, 255, 0.6);
+      }
+      
+      body { 
+        background-color: var(--company-secondary); 
+        background-image: 
+          radial-gradient(at 0% 0%, hsla(128,40%,80%,1) 0, transparent 50%), 
+          radial-gradient(at 100% 0%, hsla(12,80%,85%,1) 0, transparent 50%),
+          radial-gradient(at 100% 100%, hsla(60,60%,90%,1) 0, transparent 50%);
+        background-attachment: fixed;
+        font-family: 'Sarabun', sans-serif; 
+        padding: 0; margin: 0;
+        color: var(--company-dark); 
+      }
+      
+      .app-container { width: 96%; max-width: 1700px; margin: 20px auto; }
+      .hero-section { text-align: center; margin-bottom: 25px; padding: 20px 10px; }
+      .brand-title { font-weight: 800; font-size: 3rem; letter-spacing: -1.5px; color: var(--company-dark); text-shadow: 2px 2px 4px rgba(0,0,0,0.05); }
+      .vision-text { font-style: italic; color: var(--company-accent); letter-spacing: 1.5px; font-weight: 600; font-size: 1.15rem; }
+      
+      .glass-card { 
+        background: var(--glass-bg); 
+        backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border); border-radius: 20px; 
+        box-shadow: 0 15px 40px rgba(0,0,0,0.06); padding: 35px; 
+      }
+      
+      .announcement-banner {
+        background: linear-gradient(135deg, #e63946, #d90429);
+        color: white; padding: 15px 25px; border-radius: 15px; margin-bottom: 30px;
+        display: flex; align-items: center; box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+      }
+      .announcement-icon { font-size: 1.8rem; margin-right: 15px; animation: pulse 2s infinite; }
+      @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+      .stat-wrapper { display: flex; gap: 20px; margin-bottom: 35px; flex-wrap: wrap; }
+      .stat-card { 
+        flex: 1; min-width: 250px; background: white; border-radius: 16px; padding: 25px; 
+        box-shadow: 0 5px 15px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 20px;
+        border-left: 6px solid; transition: transform 0.3s ease;
+      }
+      .stat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+      .border-primary-c { border-color: var(--company-primary) !important; }
+      .border-accent-c { border-color: var(--company-accent) !important; }
+      .border-dark-c { border-color: var(--company-dark) !important; }
+      
+      .stat-icon { width: 65px; height: 65px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+      .stat-info h3 { font-weight: 800; margin-bottom: 0; font-size: 2.2rem; }
+      .stat-info p { margin-bottom: 0; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+
+      .icon-total { background: #f8f9fa; color: #495057; }
+      .icon-approved { background: #d8f3dc; color: #1b4332; }
+      .icon-pending { background: #ffddd2; color: #d90429; }
+
+      .section-title { font-weight: 800; color: var(--company-dark); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+      .schedule-box { background: transparent; margin-bottom: 30px; }
+      .timeline-item { 
+        background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; 
+        padding: 15px 25px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; 
+        flex-wrap: wrap; gap: 15px; transition: all 0.3s ease;
+      }
+      .timeline-item:hover { border-color: var(--company-primary); transform: translateX(5px); box-shadow: 0 4px 15px rgba(45, 106, 79, 0.1); }
+      .timeline-title { font-weight: 700; color: var(--company-dark); font-size: 1.1rem; display: flex; align-items: center; gap: 12px; }
+      .timeline-date { background: var(--company-secondary); color: var(--company-dark); font-weight: 700; padding: 8px 20px; border-radius: 10px; border: 1px solid #e0d5a3; }
+
+      .filter-section { background: rgba(255,255,255,0.7); border-radius: 16px; padding: 25px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.9); }
+      .form-control, .form-select { border-radius: 10px; border: 1px solid #ced4da; padding: 12px 15px; background: white; }
+      .form-control:focus, .form-select:focus { box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2); border-color: var(--company-primary); }
+
+      /* 🚀 🚀 แก้ไขตรงนี้: อนุญาตให้ Table เลื่อนได้และสมูทบนมือถือ 🚀 🚀 */
+      .table-container { 
+        background: white; 
+        border-radius: 16px; 
+        overflow-x: auto; /* เปลี่ยนจาก hidden เป็น auto */
+        -webkit-overflow-scrolling: touch; /* เพิ่มความสมูทบน Mobile */
+        box-shadow: 0 5px 25px rgba(0,0,0,0.04); 
+        border: 1px solid #f1f3f5; 
+      }
+      .table { margin-bottom: 0; border-collapse: separate; border-spacing: 0; }
+      .table thead { background-color: #f8f9fa; }
+      .table thead th { border-bottom: 1px solid #e9ecef; color: #495057; font-weight: 700; font-size: 0.9rem; padding: 18px 15px; }
+      .table tbody td { padding: 18px 15px; vertical-align: middle; border-bottom: 1px solid #f8f9fa; transition: background-color 0.2s ease; }
+      
+      .table tbody tr { transition: all 0.3s ease; position: relative; cursor: pointer; }
+      .table tbody tr:hover {
+        transform: translateY(-3px) scale(1.005);
+        box-shadow: 0 10px 25px rgba(45, 106, 79, 0.15);
+        z-index: 10;
+        background-color: #ffffff;
+      }
+      .table tbody tr:hover td {
+        background-color: #ffffff;
+        border-top: 1px solid var(--company-primary);
+        border-bottom: 1px solid var(--company-primary);
+      }
+      .table tbody tr:hover td:first-child { border-left: 2px solid var(--company-primary); }
+      .table tbody tr:hover td:last-child { border-right: 2px solid var(--company-primary); }
+
+      .badge { padding: 8px 14px; border-radius: 8px; font-weight: 700; letter-spacing: 0.5px; border: none; }
+      .badge-เคาะแล้ว { background-color: #d8f3dc; color: #1b4332; }
+      .badge-ยังไม่เคาะ { background-color: #f8f9fa; color: #495057; border: 1px solid #dee2e6; }
+      
+      .dept-CEO { background-color: #FFD700 !important; color: #000 !important; } 
+      .dept-CTO { background-color: #B2EBF2 !important; color: #006064 !important; } 
+      .dept-COO { background-color: #E1BEE7 !important; color: #4A148C !important; } 
+      .dept-CFO { background-color: #C8E6C9 !important; color: #1B5E20 !important; } 
+      .dept-CMO { background-color: #F8BBD0 !important; color: #880E4F !important; } 
+      .dept-CHRO { background-color: #FFE0B2 !important; color: #E65100 !important; } 
+      .dept-All-Team { background-color: #CFD8DC !important; color: #263238 !important; } 
+
+      .btn-premium { background: linear-gradient(135deg, var(--company-primary), #1b4332); color: white; border: none; border-radius: 10px; font-weight: 700; padding: 12px 25px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3); }
+      .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45, 106, 79, 0.4); color: white; }
+      .btn-outline-premium { border: 2px solid var(--company-primary); color: var(--company-primary); border-radius: 10px; font-weight: 700; background: transparent; padding: 10px 20px; transition: all 0.3s ease;}
+      .btn-outline-premium:hover { background-color: var(--company-primary); color: white; }
+
+      .action-btn { border-radius: 8px; font-weight: 600; padding: 8px 12px; font-size: 0.9rem; }
+      .btn-copy { color: #6c757d; border-color: #dee2e6; background: #fff; }
+      .btn-copy:hover { background: #e9ecef; color: var(--company-primary); border-color: var(--company-primary); }
+
+      #backToTopBtn {
+        display: none; position: fixed; bottom: 30px; right: 30px; z-index: 1050;
+        border: none; outline: none; background-color: var(--company-primary);
+        color: white; cursor: pointer; padding: 15px; border-radius: 50%;
+        font-size: 1.2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s ease;
+      }
+      #backToTopBtn:hover { background-color: var(--company-dark); transform: translateY(-5px); }
+
+      /* 🚀 🚀 🚀 แก้ไขตรงนี้: เพิ่ม Touch Scrolling ให้ Gantt Chart สมูทขึ้น 🚀 🚀 🚀 */
+      .gantt-card { margin-top: 60px; background: white; border-radius: 25px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #eee; }
+      .gantt-viewport { 
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch; /* เพิ่มความสมูทบน Mobile */
+        margin-top: 25px; 
+        border-radius: 15px; 
+        background: #fafafa; 
+        border: 1px solid #f0f0f0; 
+        padding: 25px; 
+      }
+      .gantt-table { width: 100%; min-width: 1400px; border-collapse: collapse; table-layout: fixed; }
+      .gantt-h-cell { text-align: center; font-size: 0.65rem; font-weight: 800; color: #aaa; padding: 10px 2px; border-right: 1px solid #f0f0f0; }
+      .gantt-task-row { height: 55px; border-bottom: 1px solid #f0f0f0; }
+      .gantt-task-label { width: 360px; font-weight: 700; font-size: 0.85rem; color: #333; padding-right: 25px; position: sticky; left: 0; background: #fafafa; z-index: 2; border-right: 3px solid #eee; }
+      .gantt-bar-area { position: relative; padding: 0; width: 100%; height: 55px; }
+      .gantt-bar-area::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px); background-size: calc(100% / 12) 100%; pointer-events: none; }
+      .gantt-bar { position: absolute; top: 14px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 800; color: rgba(0,0,0,0.6); box-shadow: 0 3px 6px rgba(0,0,0,0.08); margin-left: 2px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+      .btn-del-task { font-size: 0.9rem; color: var(--company-accent); cursor: pointer; opacity: 0.2; transition: 0.2s; }
+      .btn-del-task:hover { opacity: 1; }
+
+      .bar-CEO { background: #FFD700; border-left: 4px solid #b8860b; }
+      .bar-CTO { background: #B2EBF2; border-left: 4px solid #00acc1; }
+      .bar-COO { background: #E1BEE7; border-left: 4px solid #8e24aa; }
+      .bar-CFO { background: #C8E6C9; border-left: 4px solid #388e3c; }
+      .bar-CMO { background: #F8BBD0; border-left: 4px solid #d81b60; }
+      .bar-CHRO { background: #FFE0B2; border-left: 4px solid #f57c00; }
+
+      footer { margin-top: 50px; padding: 30px; text-align: center; color: #6c757d; border-top: 1px solid rgba(0,0,0,0.05); }
+
+      @media (max-width: 768px) {
+        .app-container { width: 100%; margin: 10px auto; }
+        .brand-title { font-size: 2.2rem; }
+        .glass-card { padding: 20px; border-radius: 15px; }
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="scrollToTop()" id="backToTopBtn" title="Go to top"><i class="bi bi-arrow-up"></i></button>
+
+    <div class="app-container">
+      
+      <div class="hero-section">
+        <h1 class="brand-title">Nanoki Company</h1>
+        <p class="text-muted fw-bold mb-2">Management System & Information Center</p>
+        <p class="vision-text">"Better Aging for All, Better Planet for Tomorrow"</p>
+      </div>
+
+      <div class="glass-card">
+        
+        <div id="announcementContainer" style="display: none;">
+          <div class="announcement-banner">
+            <div class="announcement-icon"><i class="bi bi-megaphone-fill"></i></div>
+            <div>
+              <div class="fw-bold small" style="color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px;">Live Announcement</div>
+              <div id="announcementText" class="fw-bold mt-1" style="font-size: 1.15rem;">กำลังโหลดประกาศ...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3 border-bottom pb-4 border-secondary">
+          <div>
+            <h2 class="fw-bold mb-1 text-dark"><i class="bi bi-folder2-open text-success me-2"></i> คลังไฟล์องค์กร</h2>
+            <span class="text-muted fw-bold fs-6">ระบบจัดการเอกสารกลางของ Nanoki</span>
+          </div>
+          
+          <div class="d-flex flex-wrap gap-2 action-buttons">
+            <div class="dropdown flex-grow-1 flex-md-grow-0">
+              <button class="btn btn-outline-dark fw-bold dropdown-toggle w-100 action-btn py-2" type="button" data-bs-toggle="dropdown"><i class="bi bi-link-45deg me-1"></i> ลิงก์สำคัญ</button>
+              <ul class="dropdown-menu shadow-lg border-0 custom-dropdown" style="border-radius: 12px; padding: 10px; min-width: 280px;">
+                <li><a class="dropdown-item fw-bold text-success py-2 rounded" href="https://docs.google.com/spreadsheets/d/1UaisiLOEzByWB7StqdWBGDje9KCJiKRBeanvijYFDR8/edit#gid=1254449726" target="_blank"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Tracking Sheet</a></li>
+                <li><a class="dropdown-item fw-bold text-primary py-2 rounded mt-1" href="https://drive.google.com/file/d/1ll73SIlIhK7JSIO7IpxQ0UIwXvrllaPQ/view?usp=sharing" target="_blank"><i class="bi bi-diagram-3 me-2"></i>Org Chart</a></li>
+                <li><a class="dropdown-item fw-bold text-primary py-2 rounded mt-1" href="https://www.mycourseville.com/?q=courseville/course/74580" target="_blank"><i class="bi bi-mortarboard me-2"></i>MyCourseVille</a></li>
+                <li><hr class="dropdown-divider my-2"></li>
+                <li><a class="dropdown-item fw-bold text-danger py-2 rounded" href="https://docs.google.com/forms/d/e/1FAIpQLScU_Y8Psl80n7MWVw1-PF1pWA35RxK1PmwXywuvN2DkyQ5eWw/viewform" target="_blank"><i class="bi bi-exclamation-triangle me-2"></i>Request & Complain</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-outline-success fw-bold action-btn py-2 flex-grow-1 flex-md-grow-0" onclick="exportToCSV()"><i class="bi bi-filetype-csv me-1"></i> Export CSV</button>
+            <button class="btn btn-outline-premium action-btn py-2 flex-grow-1 flex-md-grow-0" onclick="refreshData()"><i class="bi bi-arrow-arrows-clockwise me-1"></i> Sync Data</button>
+            <button class="btn btn-premium action-btn py-2 flex-grow-1 flex-md-grow-0" onclick="openForm()"><i class="bi bi-plus-circle me-1"></i> เพิ่มไฟล์ใหม่</button>
+          </div>
+        </div>
+
+        <div class="stat-wrapper">
+          <div class="stat-card border-dark-c">
+            <div class="stat-icon icon-total"><i class="bi bi-files"></i></div>
+            <div class="stat-info">
+              <p class="text-muted">ไฟล์ในระบบทั้งหมด</p>
+              <h3 id="statTotal" class="text-dark">0</h3>
+            </div>
+          </div>
+          <div class="stat-card border-primary-c">
+            <div class="stat-icon icon-approved"><i class="bi bi-check-circle-fill"></i></div>
+            <div class="stat-info">
+              <p class="text-success">สถานะ เคาะแล้ว</p>
+              <h3 id="statApproved" style="color: #1b4332;">0</h3>
+            </div>
+          </div>
+          <div class="stat-card border-accent-c">
+            <div class="stat-icon icon-pending"><i class="bi bi-hourglass-split"></i></div>
+            <div class="stat-info">
+              <p class="text-danger">รอการพิจารณา</p>
+              <h3 id="statPending" style="color: #d90429;">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 mb-4">
+          <h4 class="section-title"><i class="bi bi-calendar-check-fill text-accent"></i> กำหนดการสำคัญ (Timeline)</h4>
+          <div class="schedule-box" id="scheduleBody">
+            <div class="text-muted text-center py-4 fw-bold">
+              <div class="spinner-border spinner-border-sm text-accent mb-2" role="status"></div><br>กำลังโหลดกำหนดการ...
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section mt-5">
+          <div class="row g-3 align-items-end">
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <label class="fw-bold mb-2 small text-dark"><i class="bi bi-search me-1"></i>ค้นหาไฟล์</label>
+              <input type="text" id="searchInput" class="form-control" placeholder="ชื่อไฟล์ / รายละเอียด..." oninput="applyFilters()">
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6">
+              <label class="fw-bold mb-2 small text-dark">สถานะ</label>
+              <select id="filterStatus" class="form-select fw-bold text-secondary" onchange="applyFilters()">
+                <option value="All">ทั้งหมด</option>
+                <option value="เคาะแล้ว">เคาะแล้ว (Approved)</option>
+                <option value="ยังไม่เคาะ">ยังไม่เคาะ (Draft)</option>
+              </select>
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6">
+              <label class="fw-bold mb-2 small text-dark">หมวดหมู่</label>
+              <select id="filterCategory" class="form-select fw-bold text-secondary" onchange="updateFilterUI()">
+                <option value="All">ทุกหมวดหมู่</option>
+                <option value="ไฟล์ส่วนกลาง">ส่วนกลาง (Shared)</option>
+                <option value="ไฟล์ C-Level 6 คน">C-Level เฉพาะ</option>
+              </select>
+            </div>
+            <div class="col-xl-2 col-lg-6 col-md-6">
+              <label class="fw-bold mb-2 small text-dark">กรองแผนก</label>
+              <select id="filterDept" class="form-select fw-bold text-primary" onchange="applyFilters()">
+                <option value="All">ทุกคน</option>
+                <option value="CEO">CEO</option><option value="CTO">CTO</option>
+                <option value="COO">COO</option><option value="CMO">CMO</option>
+                <option value="CFO">CFO</option><option value="CHRO">CHRO</option>
+                <option value="All Team">All Team</option>
+              </select>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12">
+              <label class="fw-bold mb-2 small text-dark"><i class="bi bi-sort-down me-1"></i>จัดเรียง (Sort by)</label>
+              <select id="sortData" class="form-select fw-bold border-dark" onchange="applyFilters()">
+                <option value="uploadDesc" selected>เวลาอัปโหลด (ใหม่ > เก่า)</option>
+                <option value="uploadAsc">เวลาอัปโหลด (เก่า > ใหม่)</option>
+                <option value="modDesc">แก้ไขล่าสุด (ใหม่ > เก่า)</option>
+                <option value="modAsc">แก้ไขล่าสุด (เก่า > ใหม่)</option>
+                <option value="nameAsc">ชื่อไฟล์ (ก-ฮ, A-Z)</option>
+                <option value="nameDesc">ชื่อไฟล์ (ฮ-ก, Z-A)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container mt-3">
+          <table class="table align-middle table-nowrap mb-0" style="min-width: 1200px;">
+            <thead class="text-center">
+              <tr>
+                <th width="5%">No.</th>
+                <th width="32%" class="text-start ps-4">ชื่อไฟล์ / รายละเอียด</th>
+                <th width="10%">สถานะ</th>
+                <th width="15%">ผู้รับผิดชอบ / แผนก</th>
+                <th width="20%">อัปเดตล่าสุด (Modified)</th>
+                <th width="18%">จัดการ (Actions)</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"><tr><td colspan="6" class="text-center p-5 text-muted"><div class="spinner-border text-success" role="status"></div><br>Loading Data...</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-2" id="paginationControls" style="display: none;">
+          <span class="text-muted small fw-bold" id="pageInfo">Showing 0-0 of 0</span>
+          <div class="btn-group shadow-sm">
+            <button class="btn btn-light border fw-bold px-4 py-2" id="btnPrev" onclick="changePage(-1)"><i class="bi bi-chevron-left me-1"></i> Prev</button>
+            <button class="btn btn-light border fw-bold px-4 py-2" id="btnNext" onclick="changePage(1)">Next <i class="bi bi-chevron-right ms-1"></i></button>
+          </div>
+        </div>
+
+        <div class="gantt-card" id="ganttSection">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-2">
+            <div>
+              <h3 class="fw-bold text-dark m-0"><i class="bi bi-map-fill text-primary me-2"></i> Nanoki Roadmap</h3>
+              <p class="text-muted fw-bold small mt-1 mb-0">ภาพรวมการดำเนินงานขนาดย่อ</p>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+              <select id="ganttFilter" class="form-select form-select-sm fw-bold border-primary shadow-sm" style="width: 250px;" onchange="renderGantt()">
+                <option value="Overall">🔎 Overall Summary (Lv1)</option>
+                <option value="CEO">CEO Team (Detailed Lv2)</option>
+                <option value="CTO">CTO Team (Detailed Lv2)</option>
+                <option value="COO">COO Team (Detailed Lv2)</option>
+                <option value="CFO">CFO Team (Detailed Lv2)</option>
+                <option value="CMO">CMO Team (Detailed Lv2)</option>
+                <option value="CHRO">CHRO Team (Detailed Lv2)</option>
+              </select>
+              <button class="btn btn-outline-primary btn-sm fw-bold px-3 shadow-sm" onclick="openGanttManageModal()">
+                <i class="bi bi-plus-lg me-1"></i> Manage
+              </button>
+              <button class="btn btn-primary btn-sm fw-bold px-3 shadow-sm" onclick="exportGanttToPNG()">
+                <i class="bi bi-image me-1"></i> Save .PNG
+              </button>
+            </div>
+          </div>
+
+          <div class="gantt-viewport shadow-sm">
+            <table class="gantt-table" id="ganttCaptureArea" style="background: #fafafa;">
+              <thead>
+                <tr>
+                  <th class="gantt-task-label" style="background: #f8f9fa;">Activities & Milestone</th>
+                  <th class="gantt-h-cell">W1<br>16 Feb</th><th class="gantt-h-cell">W2<br>23 Feb</th>
+                  <th class="gantt-h-cell">W3<br>02 Mar</th><th class="gantt-h-cell">W4<br>09 Mar</th>
+                  <th class="gantt-h-cell">W5<br>16 Mar</th><th class="gantt-h-cell">W6<br>23 Mar</th>
+                  <th class="gantt-h-cell">W7<br>30 Mar</th><th class="gantt-h-cell">W8<br>06 Apr</th>
+                  <th class="gantt-h-cell">W9<br>13 Apr</th><th class="gantt-h-cell">W10<br>20 Apr</th>
+                  <th class="gantt-h-cell">W11<br>27 Apr</th><th class="gantt-h-cell">W12<br>04 May</th>
+                </tr>
+              </thead>
+              <tbody id="ganttBody">
+                </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <footer>
+        <p class="mb-1 fw-bold fs-5" style="color: var(--company-primary);">© 2026 Nanoki Company - Internal Use Only</p>
+        <p class="mb-2 fw-bold text-muted">รายวิชา 2104-409: Industrial Business Management (IBM) ปีการศึกษา 2568</p>
+        <p class="mb-0 small text-secondary">This Website is created by CTO Team. 💻✨</p>
+      </footer>
+    </div>
+
+    <div id="ganttModal" class="modal" tabindex="-1" style="display:none; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); position: fixed; top:0; left:0; width:100%; height:100%; z-index: 2000; overflow-y: auto;">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+          <div class="modal-header bg-dark text-white border-0 p-4">
+            <h5 class="modal-title fw-bold">เมนูจัดการ Gantt Chart</h5>
+            <button type="button" class="btn-close btn-close-white" onclick="closeGanttManageModal()"></button>
+          </div>
+          <div class="modal-body p-4 bg-light">
+            <div class="card border-0 shadow-sm mb-4">
+              <div class="card-body">
+                <h6 class="fw-bold mb-3">Add New Task Level 2</h6>
+                <div class="row g-2">
+                  <div class="col-12"><input type="text" id="gTaskName" class="form-control" placeholder="ชื่องาน"></div>
+                  <div class="col-md-6">
+                    <select id="gDept" class="form-select">
+                      <option value="CEO">CEO</option><option value="CTO">CTO</option>
+                      <option value="COO">COO</option><option value="CFO">CFO</option>
+                      <option value="CMO">CMO</option><option value="CHRO">CHRO</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3"><input type="number" id="gStart" class="form-control" placeholder="Week (0-11)" min="0" max="11"></div>
+                  <div class="col-md-3"><input type="number" id="gLen" class="form-control" placeholder="Len" min="1" max="12"></div>
+                  <div class="col-12 mt-3"><button class="btn btn-primary w-100 fw-bold" onclick="addGanttTaskManual()">+ Add Task</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="formModal" class="modal" tabindex="-1" style="display:none; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); position: fixed; top:0; left:0; width:100%; height:100%; z-index: 1050; overflow-y: auto;">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+          <div class="modal-header" style="background: linear-gradient(135deg, var(--company-dark), var(--company-primary)); color: white; border-bottom: none; padding: 25px;">
+            <h4 class="modal-title fw-bold m-0" id="modalTitle">อัปโหลด/แก้ไขไฟล์</h4>
+            <button type="button" class="btn-close btn-close-white fs-5" onclick="closeForm()"></button>
+          </div>
+          <div class="modal-body p-4 p-md-5 bg-light">
+            <form id="fileForm">
+              <input type="hidden" id="recordId"><input type="hidden" id="originalUploadTime">
+              <div class="row g-4">
+                <div class="col-md-8"><label class="form-label fw-bold text-dark">ชื่อไฟล์ / หัวข้อ</label><input type="text" id="fileName" class="form-control form-control-lg"></div>
+                <div class="col-md-4"><label class="form-label fw-bold text-success">สถานะ</label><select id="status" class="form-select form-select-lg"><option value="ยังไม่เคาะ (Good2Know)">ยังไม่เคาะ</option><option value="เคาะแล้ว">เคาะแล้ว</option></select></div>
+                <div class="col-12"><label class="form-label fw-bold text-dark">รายละเอียด</label><textarea id="description" class="form-control" rows="2"></textarea></div>
+                <div class="col-md-6"><label class="form-label fw-bold text-dark">หมวดหมู่</label><select id="category" class="form-select form-select-lg" onchange="handleModalCategoryChange()"><option value="ไฟล์ส่วนกลาง">ส่วนกลาง</option><option value="ไฟล์ C-Level 6 คน">เฉพาะ C-Level</option></select></div>
+                <div class="col-md-6"><label class="form-label fw-bold text-dark">แผนก</label><select id="department" class="form-select form-select-lg"><option value="All Team">All Team</option><option value="CEO">CEO</option><option value="CTO">CTO</option><option value="COO">COO</option><option value="CMO">CMO</option><option value="CFO">CFO</option><option value="CHRO">CHRO</option></select></div>
+                <div class="col-md-5"><label class="form-label fw-bold text-dark">ชื่อผู้อัปโหลด</label><input type="text" id="uploader" class="form-control form-control-lg"></div>
+                <div class="col-md-7"><label class="form-label fw-bold text-primary">URL ลิงก์ไฟล์</label><input type="text" id="url" class="form-control form-control-lg border-primary"></div>
+                <div class="col-md-5 ms-auto text-end mt-4"><label class="form-label fw-bold text-danger">PIN (4 หลัก)</label><input type="password" id="filePin" class="form-control form-control-lg border-danger text-center fw-bold fs-4" maxlength="4"></div>
+                <div class="col-12 mt-2"><div class="form-check form-switch border rounded p-4 bg-white shadow-sm"><input class="form-check-input ms-1 mt-1" type="checkbox" id="isPinned" style="transform: scale(1.5);"><label class="form-check-label ms-3 fw-bold text-dark fs-5" for="isPinned">📌 ปักหมุดไฟล์นี้</label></div></div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer bg-light border-top-0 p-4">
+            <button type="button" class="btn btn-outline-secondary fw-bold px-4 py-2" onclick="closeForm()">ยกเลิก</button>
+            <button type="button" class="btn btn-premium px-5 py-2 fs-5" id="saveBtn"><span id="saveBtnText"><i class="bi bi-save me-2"></i>บันทึกข้อมูล</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1060;">
+      <div id="liveToast" class="toast align-items-center text-white border-0 shadow-lg" role="alert" style="border-radius: 12px;"><div class="d-flex"><div class="toast-body fw-bold fs-6" id="toastMessage"></div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div></div>
+    </div>
+
+    <script>
+      let allData = [];
+      let currentFilteredData = [];
+      let currentPage = 1;
+      const itemsPerPage = 10;
+
+      const initialGanttData = [
+        // CEO Team (12)
+        { id: 1, dept: "CEO", lv: 1, task: "Corporate Strategy & Leadership", start: 0, length: 12, label: "CEO Strategic" },
+        { id: 2, dept: "CEO", lv: 2, task: "↳ Legal Framework Definition", start: 0, length: 4, label: "Legal" },
+        { id: 3, dept: "CEO", lv: 2, task: "↳ Master Contract Framework", start: 1, length: 3, label: "Contracts" },
+        { id: 4, dept: "CEO", lv: 2, task: "↳ Governance Policy Drafting", start: 3, length: 3, label: "Policy" },
+        { id: 5, dept: "CEO", lv: 2, task: "↳ 🔎 Strategic Review Q2", start: 7, length: 2, label: "Review" },
+        { id: 6, dept: "CEO", lv: 2, task: "↳ Partner Alliance Development", start: 5, length: 4, label: "Partners" },
+        { id: 7, dept: "CEO", lv: 2, task: "↳ PR & Brand Reputation", start: 4, length: 6, label: "PR" },
+        { id: 8, dept: "CEO", lv: 2, task: "↳ Board of Director Reporting", start: 0, length: 12, label: "Board" },
+        { id: 9, dept: "CEO", lv: 2, task: "↳ Company Org Chart Calibration", start: 1, length: 2, label: "Org" },
+        { id: 10, dept: "CEO", lv: 2, task: "↳ Stakeholder Engagement Plan", start: 8, length: 4, label: "Stakeholders" },
+        { id: 11, dept: "CEO", lv: 2, task: "↳ Goal Setting & Objectives Q1", start: 0, length: 2, label: "Goals" },
+        { id: 12, dept: "CEO", lv: 2, task: "↳ Project Final Consolidation", start: 11, length: 1, label: "Final" },
+
+        // CFO Team (12)
+        { id: 13, dept: "CFO", lv: 1, task: "Financial Strategy & Control", start: 1, length: 11, label: "Finance Core" },
+        { id: 14, dept: "CFO", lv: 2, task: "↳ Budget Q1 Allocation", start: 1, length: 2, label: "Q1 Alloc" },
+        { id: 15, dept: "CFO", lv: 2, task: "↳ 🚀 Budget Q2 Allocation", start: 8.5, length: 1, label: "Q2 Alloc" },
+        { id: 16, dept: "CFO", lv: 2, task: "↳ 🚀 Budget Q3 Allocation", start: 9.5, length: 1, label: "Q3 Alloc" },
+        { id: 17, dept: "CFO", lv: 2, task: "↳ Weekly Cost Control Anal", start: 1, length: 11, label: "Costing" },
+        { id: 18, dept: "CFO", lv: 2, task: "↳ Internal Financial Audit", start: 5.5, length: 3, label: "Audit" },
+        { id: 19, dept: "CFO", lv: 2, task: "↳ Tax Compliance Reporting", start: 4, length: 2.5, label: "Tax" },
+        { id: 20, dept: "CFO", lv: 2, task: "↳ Cash Flow Forecasting", start: 0, length: 12, label: "Cash Flow" },
+        { id: 21, dept: "CFO", lv: 2, task: "↳ Capital Funding Criteria", start: 2.5, length: 2, label: "Criteria" },
+        { id: 22, dept: "CFO", lv: 2, task: "↳ Investment Strategy Review", start: 2, length: 10, label: "Invest" },
+        { id: 23, dept: "CFO", lv: 2, task: "↳ Controller Ops Oversight", start: 3, length: 9, label: "Control" },
+        { id: 24, dept: "CFO", lv: 2, task: "↳ Fin Risk Mitigation Plan", start: 2, length: 6, label: "Risk" },
+
+        // CTO Team (12)
+        { id: 25, dept: "CTO", lv: 1, task: "Tech Infrastructure & R&D", start: 0, length: 11, label: "Tech Core" },
+        { id: 26, dept: "CTO", lv: 2, task: "↳ IBM Stack Infra Design", start: 0, length: 4, label: "Infra" },
+        { id: 27, dept: "CTO", lv: 2, task: "↳ 💻 Technology Upgrade Phase", start: 3, length: 6, label: "Upgrade" },
+        { id: 28, dept: "CTO", lv: 2, task: "↳ Central Database & Storage", start: 7, length: 4, label: "Data Center" },
+        { id: 29, dept: "CTO", lv: 2, task: "↳ Innovation Design Workshop", start: 3.5, length: 3, label: "R&D" },
+        { id: 30, dept: "CTO", lv: 2, task: "↳ IT Security & Data Guard", start: 2, length: 10, label: "Security" },
+        { id: 31, dept: "CTO", lv: 2, task: "↳ DA Support Support Team Ops", start: 5, length: 7, label: "Analysis" },
+        { id: 32, dept: "CTO", lv: 2, task: "↳ Tech Compliance Audit", start: 4, length: 2, label: "Regs" },
+        { id: 33, dept: "CTO", lv: 2, task: "↳ System Scalability Test", start: 9, length: 2, label: "Scalability" },
+        { id: 34, dept: "CTO", lv: 2, task: "↳ Tech Stack Documentation", start: 10, length: 2, label: "Docs" },
+        { id: 35, dept: "CTO", lv: 2, task: "↳ Internal API Gateway Dev", start: 5, length: 5, label: "API" },
+        { id: 36, dept: "CTO", lv: 2, task: "↳ Platform Stability Monitor", start: 0, length: 12, label: "Monitor" },
+
+        // COO Team (12)
+        { id: 37, dept: "COO", lv: 1, task: "Operational Excellence & Chain", start: 1, length: 10, label: "COO Core" },
+        { id: 38, dept: "COO", lv: 2, task: "↳ 🚛 Logistics & Supply MGR", start: 1, length: 4.5, label: "Logistics" },
+        { id: 39, dept: "COO", lv: 2, task: "↳ Warehouse Automation Design", start: 4, length: 7, label: "Automation" },
+        { id: 40, dept: "COO", lv: 2, task: "↳ Demand Analysis & Forecast", start: 1, length: 3, label: "Demand" },
+        { id: 41, dept: "COO", lv: 2, task: "↳ Retail Management Protocols", start: 2, length: 6, label: "Retail" },
+        { id: 42, dept: "COO", lv: 2, task: "↳ Inventory Optimization Plan", start: 3, length: 8, label: "Inventory" },
+        { id: 43, dept: "COO", lv: 2, task: "↳ Quality Assurance Framework", start: 4, length: 3, label: "QA" },
+        { id: 44, dept: "COO", lv: 2, task: "↳ Vendor Selection Management", start: 3, length: 9, label: "Vendors" },
+        { id: 45, dept: "COO", lv: 2, task: "↳ Service Level Tracking (SLA)", start: 0, length: 12, label: "SLA" },
+        { id: 46, dept: "COO", lv: 2, task: "↳ Logistics Hub Deployment", start: 5, length: 5, label: "Hub" },
+        { id: 47, dept: "COO", lv: 2, task: "↳ Operational Capacity Review", start: 6, length: 5, label: "Capacity" },
+        { id: 48, dept: "COO", lv: 2, task: "↳ Store Maintenance Cycle", start: 2, length: 10, label: "Store" },
+
+        // CMO Team (12)
+        { id: 49, dept: "CMO", lv: 1, task: "Brand Identity & Customer Growth", start: 2, length: 10, label: "Marketing" },
+        { id: 50, dept: "CMO", lv: 2, task: "↳ Brand Awareness Campaign", start: 3, length: 8, label: "Branding" },
+        { id: 51, dept: "CMO", lv: 2, task: "↳ CX & Trade Marketing Initiatives", start: 6, length: 6, label: "CX Launch" },
+        { id: 52, dept: "CMO", lv: 2, task: "↳ Marketing Strategy Q1-Q2", start: 2, length: 5, label: "Strategy" },
+        { id: 53, dept: "CMO", lv: 2, task: "↳ Product Attractive Analysis", start: 2, length: 3, label: "Attractive" },
+        { id: 54, dept: "CMO", lv: 2, task: "↳ Customer Insight Research", start: 3, length: 3, label: "Research" },
+        { id: 55, dept: "CMO", lv: 2, task: "↳ Digital Marketing Stack Ops", start: 5, length: 7, label: "Digital" },
+        { id: 56, dept: "CMO", lv: 2, task: "↳ Media Planning & Buying", start: 8, length: 4, label: "Media" },
+        { id: 57, dept: "CMO", lv: 2, task: "↳ Social Media Calendar Ops", start: 0, length: 12, label: "Social" },
+        { id: 58, dept: "CMO", lv: 2, task: "↳ Market Segmentation Strategy", start: 1, length: 4, label: "Segments" },
+        { id: 59, dept: "CMO", lv: 2, task: "↳ Content Marketing Roadmap", start: 4, length: 8, label: "Content" },
+        { id: 60, dept: "CMO", lv: 2, task: "↳ CRM Data Integration Plan", start: 4, length: 6, label: "CRM" },
+
+        // CHRO Team (12)
+        { id: 61, dept: "CHRO", lv: 1, task: "Human Capital & Culture Hub", start: 0, length: 12, label: "CHRO Core" },
+        { id: 62, dept: "CHRO", lv: 2, task: "↳ Talent Onboarding Program", start: 0, length: 3, label: "Onboard" },
+        { id: 63, dept: "CHRO", lv: 2, task: "↳ KPI Framework & Calibration", start: 4.5, length: 4.5, label: "KPI" },
+        { id: 64, dept: "CHRO", lv: 2, task: "↳ L&D Internal Training", start: 3, length: 9, label: "Training" },
+        { id: 65, dept: "CHRO", lv: 2, task: "↳ Employee Engagement Survey", start: 2, length: 2, label: "Survey" },
+        { id: 66, dept: "CHRO", lv: 2, task: "↳ Career Development Path", start: 6, length: 6, label: "Career" },
+        { id: 67, dept: "CHRO", lv: 2, task: "↳ Performance Evaluation Sys", start: 5, length: 7, label: "Evaluation" },
+        { id: 68, dept: "CHRO", lv: 2, task: "↳ Cultural Initiatives Rollout", start: 4, length: 8, label: "Culture" },
+        { id: 69, dept: "CHRO", lv: 2, task: "↳ Compensation Review Q1", start: 1, length: 3, label: "Comp" },
+        { id: 70, dept: "CHRO", lv: 2, task: "↳ Recruitment Optimization", start: 0, length: 12, label: "Recruit" },
+        { id: 71, dept: "CHRO", lv: 2, task: "↳ Succession Planning Design", start: 9, length: 3, label: "Succession" },
+        { id: 72, dept: "CHRO", lv: 2, task: "↳ Employee Feedback Loop", start: 0, length: 12, label: "Feedback" }
+      ];
+
+      let synthesizedGantt = JSON.parse(localStorage.getItem('nanoki_gantt_fixed_v4')) || initialGanttData;
+
+      function renderGantt() {
+        const filter = document.getElementById('ganttFilter').value;
+        const tbody = document.getElementById('ganttBody');
+        tbody.innerHTML = '';
+
+        let displayData = (filter === "Overall") 
+          ? synthesizedGantt.filter(d => d.lv === 1) 
+          : synthesizedGantt.filter(d => d.dept === filter && d.lv === 2);
+
+        displayData.forEach(item => {
+          const row = document.createElement('tr');
+          row.className = 'gantt-task-row';
+          row.innerHTML = `
+            <td class="gantt-task-label">
+              <span class="text-truncate" title="${item.task}">${item.task}</span>
+              ${item.lv === 2 ? `<i class="bi bi-trash btn-del-task" onclick="removeGanttTask(${item.id})"></i>` : ''}
+            </td>
+            <td colspan="12" class="gantt-bar-area">
+              <div class="gantt-bar bar-${item.dept}" 
+                   style="left: calc((100% / 12) * ${item.start}); 
+                          width: calc((100% / 12) * ${item.length} - 12px);">
+                ${item.label}
+              </div>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+
+      function openGanttManageModal() { document.getElementById('ganttModal').style.display = 'block'; }
+      function closeGanttManageModal() { document.getElementById('ganttModal').style.display = 'none'; }
+      function addGanttTaskManual() {
+        const name = document.getElementById('gTaskName').value, dept = document.getElementById('gDept').value;
+        const start = parseFloat(document.getElementById('gStart').value), len = parseFloat(document.getElementById('gLen').value);
+        if(!name || isNaN(start)) return alert("Fill data");
+        synthesizedGantt.push({ id: Date.now(), dept, lv: 2, task: "↳ " + name, start, length: len, label: name.substring(0,10) });
+        localStorage.setItem('nanoki_gantt_fixed_v4', JSON.stringify(synthesizedGantt));
+        renderGantt(); closeGanttManageModal();
+      }
+      function removeGanttTask(id) {
+        if(!confirm("Delete this task?")) return;
+        synthesizedGantt = synthesizedGantt.filter(t => t.id !== id);
+        localStorage.setItem('nanoki_gantt_fixed_v4', JSON.stringify(synthesizedGantt));
+        renderGantt();
+      }
+      function exportGanttToPNG() {
+        const area = document.getElementById('ganttSection');
+        html2canvas(area, { scale: 2, backgroundColor: "#ffffff" }).then(canvas => {
+          const link = document.createElement('a'); link.download = 'Nanoki_Roadmap_Fixed.png'; link.href = canvas.toDataURL(); link.click();
+          showToast("Roadmap saved as PNG! 🖼️", "success");
+        });
+      }
+
+      window.onscroll = function() { let b = document.getElementById("backToTopBtn"); if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) b.style.display = "block"; else b.style.display = "none"; };
+      function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+      window.onload = function() { document.getElementById('filterCategory').value = 'ไฟล์ส่วนกลาง'; updateFilterUI(); refreshData(); handleModalCategoryChange(); renderGantt(); document.getElementById('saveBtn').onclick = saveData; };
+      function refreshData() { loadData(); loadSchedule(); loadAnnouncement(); }
+      function loadAnnouncement() { google.script.run.withSuccessHandler(text => { let c = document.getElementById('announcementContainer'); if (text && text.trim() !== "") { document.getElementById('announcementText').innerText = text; c.style.display = 'block'; } else c.style.display = 'none'; }).getAnnouncement(); }
+      function showToast(m, t) { let el = document.getElementById('liveToast'); document.getElementById('toastMessage').innerHTML = t === 'success' ? `<i class="bi bi-check-circle-fill me-2 fs-5"></i>${m}` : `<i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>${m}`; el.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'text-dark'); if(t === 'success') el.classList.add('bg-success'); else if(t === 'error') el.classList.add('bg-danger'); else el.classList.add('bg-warning', 'text-dark'); new bootstrap.Toast(el).show(); }
+      function copyLink(u) { if (!u || u === "#" || u === "-") { showToast("ไม่มีลิงก์", "warning"); return; } const el = document.createElement('textarea'); el.value = u; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showToast("คัดลอกลิงก์สำเร็จ! 📱", "success"); }
+      function updateFilterUI() { let cat = document.getElementById('filterCategory').value, dept = document.getElementById('filterDept'); if (cat === 'ไฟล์ส่วนกลาง') { dept.value = 'All'; dept.disabled = true; } else dept.disabled = false; applyFilters(); }
+      function handleModalCategoryChange() { let cat = document.getElementById('category').value, dept = document.getElementById('department'); if(cat === 'ไฟล์ส่วนกลาง') { dept.value = 'All Team'; dept.disabled = true; } else dept.disabled = false; }
+      function loadSchedule() { google.script.run.withSuccessHandler(d => { let c = document.getElementById('scheduleBody'); if (d && d.length) { c.innerHTML = d.map(r => { if(r[0] === 'รายละเอียด') return ''; return `<div class="timeline-item shadow-sm"><div class="timeline-title"><i class="bi bi-calendar-check-fill text-accent fs-5"></i> ${r[0]}</div><div class="timeline-date"><i class="bi bi-clock me-1"></i> ${r[1]}</div></div>`; }).join(''); } else c.innerHTML = '<div class="text-muted text-center py-3">ไม่มีกำหนดการ</div>'; }).getScheduleData(); }
+      function loadData() { google.script.run.withSuccessHandler(d => { allData = d || []; applyFilters(); updateDashboard(); }).getFilesData(); }
+      function updateDashboard() { document.getElementById('statTotal').innerText = allData.length; document.getElementById('statApproved').innerText = allData.filter(r => (r[9]||'').includes('เคาะแล้ว')).length; document.getElementById('statPending').innerText = allData.filter(r => (r[9]||'').includes('ยังไม่เคาะ')).length; }
+      function applyFilters() { let s = document.getElementById('searchInput').value.toLowerCase(), st = document.getElementById('filterStatus').value, c = document.getElementById('filterCategory').value, d = document.getElementById('filterDept').value, so = document.getElementById('sortData').value; let pin = allData.filter(r => r[12] === true), nor = allData.filter(r => r[12] !== true); let fNor = nor.filter(r => ((r[1]||'').toLowerCase().includes(s) || (r[2]||'').toLowerCase().includes(s)) && (st === 'All' || (r[9]||'').includes(st)) && (c === 'All' || r[3] === c) && (d === 'All' || r[5] === d)); const sortFn = (a, b) => { if(so === 'uploadDesc') return parseDateJS(b[6]) - parseDateJS(a[6]); if(so === 'modDesc') return parseDateJS(b[7]) - parseDateJS(a[7]); if(so === 'nameAsc') return (a[1]||'').localeCompare(b[1]||'', 'th'); return 0; }; fNor.sort(sortFn); pin.sort(sortFn); currentFilteredData = [...pin, ...fNor]; currentPage = 1; renderTable(currentFilteredData); }
+      function parseDateJS(s) { if(!s || s==='-') return 0; let p = s.split(' '), d = p[0].split('/'), t = (p[1]||"00:00:00").split(':'); return new Date(d[2], d[1]-1, d[0], t[0], t[1], t[2]).getTime(); }
+      function changePage(direction) { currentPage += direction; renderTable(currentFilteredData); }
+      function renderTable(data) { let tbody = document.getElementById('tableBody'), pg = document.getElementById('paginationControls'); tbody.innerHTML = ''; if(!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="text-center p-5 text-muted">ไม่พบข้อมูล</td></tr>'; pg.style.display = 'none'; return; } let total = data.length, pages = Math.ceil(total / itemsPerPage); if (currentPage > pages) currentPage = pages; let start = (currentPage - 1) * itemsPerPage, end = Math.min(start + itemsPerPage, total), pData = data.slice(start, end); tbody.innerHTML = pData.map((row, index) => { let running = start + index + 1, isPin = row[12] === true, dc = "dept-" + (row[5] || "All-Team").replace(" ", "-"); return `<tr class="${isPin?'pinned-row':''}" style="${isPin?'background-color:#fffdf5; border-left:5px solid #ffca3a;':''}"> <td class="text-center fw-bold text-muted fs-5">${running}</td> <td class="ps-4" style="max-width: 400px;"> <span class="fw-bold fs-5 text-dark">${row[1]} ${isPin?'<span class="badge ms-2" style="background:#ffca3a; color:#1b4332; font-size:0.75rem;"><i class="bi bi-pin-angle-fill"></i> PINNED</span>':''}</span> <p class="text-secondary mt-1 mb-0" style="font-size:0.95rem;">${row[2]}</p> </td> <td class="text-center"><span class="badge ${row[9].includes('เคาะแล้ว')?'badge-เคาะแล้ว':'badge-ยังไม่เคาะ'} fs-6">${row[9]}</span></td> <td class="text-center fw-bold text-dark">${row[4]}<br><span class="badge ${dc} mt-2 py-2 px-3 shadow-sm">${row[5]}</span></td> <td class="text-start ps-3"><span class="d-block fw-bold text-dark"><i class="bi bi-cloud-arrow-up text-success"></i> ${row[6]||'-'}</span>${row[11]&&row[7]!==row[6]?`<small class="text-muted mt-1 d-block"><i class="bi bi-pencil-square text-primary"></i> ${row[7]}<br>โดย: ${row[11]}</small>`:''}</td> <td class="text-center"> <div class="btn-group shadow-sm"> <a href="${row[8]}" target="_blank" class="btn btn-light border action-btn text-success"><i class="bi bi-box-arrow-up-right"></i></a> <button class="btn btn-light border action-btn btn-copy" onclick='copyLink("${row[8]}")'><i class="bi bi-clipboard"></i></button> <button class="btn btn-light border text-primary action-btn" onclick='editRecord("${row[0]}")'><i class="bi bi-pencil-square"></i></button> <button class="btn btn-light border text-danger action-btn" onclick='deleteRecord("${row[0]}")'><i class="bi bi-trash"></i></button> </div> </td> </tr>` }).join(''); pg.style.display = 'flex'; document.getElementById('pageInfo').innerText = `Showing ${start + 1}-${end} of ${total} items (Page ${currentPage}/${pages})`; document.getElementById('btnPrev').disabled = (currentPage === 1); document.getElementById('btnNext').disabled = (currentPage === pages); }
+      function openForm() { document.getElementById('formModal').style.display = 'block'; }
+      function closeForm() { document.getElementById('formModal').style.display = 'none'; clearForm(); }
+      function clearForm() { document.getElementById('fileForm').reset(); document.getElementById('recordId').value = ''; document.getElementById('filePin').value = ''; document.getElementById('isPinned').checked = false; document.getElementById('saveBtn').disabled = false; document.getElementById('saveBtnText').innerHTML = '<i class="bi bi-save me-2"></i>บันทึกข้อมูล'; document.getElementById('saveBtnSpinner').classList.add('d-none'); handleModalCategoryChange(); }
+      function editRecord(id) { let r = allData.find(x => x[0].toString() === id.toString()); if(!r) return; let savedPin = (r[10]||"").toString(); if(savedPin && prompt("🔒 ใส่ PIN 4 หลัก:") !== savedPin) return showToast("รหัส PIN ไม่ถูกต้อง!", "error"); document.getElementById('recordId').value = r[0]; document.getElementById('fileName').value = r[1]; document.getElementById('description').value = r[2]; document.getElementById('category').value = r[3]; handleModalCategoryChange(); document.getElementById('department').value = r[5]; document.getElementById('uploader').value = r[4] || ''; document.getElementById('originalUploadTime').value = r[6]; document.getElementById('url').value = r[8]; document.getElementById('status').value = r[9]; document.getElementById('filePin').value = savedPin; document.getElementById('isPinned').checked = (r[12] === true); openForm(); }
+      function deleteRecord(id) { let r = allData.find(x => x[0].toString() === id.toString()); let savedPin = (r[10]||"").toString(); if(savedPin && prompt("🔒 ใส่ PIN:") !== savedPin) return showToast("รหัส PIN ไม่ถูกต้อง!", "error"); if(!confirm("⚠️ ยืนยันการลบ?")) return; google.script.run.withSuccessHandler(data => { allData = data; applyFilters(); updateDashboard(); showToast("ลบสำเร็จ", "success"); }).deleteFileRecord(id); }
+      function saveData() { let pin = document.getElementById('filePin').value; if(pin.length < 4) return showToast("ตั้ง PIN 4 หลัก", "warning"); document.getElementById('saveBtn').disabled = true; document.getElementById('saveBtnText').innerText = 'กำลังบันทึก...'; let targetStatus = document.getElementById('status').value; let rec = { id: document.getElementById('recordId').value, originalUploadTime: document.getElementById('originalUploadTime').value, fileName: document.getElementById('fileName').value || '-', description: document.getElementById('description').value || '-', status: targetStatus, category: document.getElementById('category').value, uploader: document.getElementById('uploader').value || '-', department: document.getElementById('department').disabled ? 'All Team' : document.getElementById('department').value, url: document.getElementById('url').value || '-', pin: pin, isPinned: document.getElementById('isPinned').checked }; google.script.run.withSuccessHandler(res => { if (res && res.error) { showToast(res.error, "error"); document.getElementById('saveBtn').disabled = false; } else { allData = res; applyFilters(); updateDashboard(); closeForm(); showToast("สำเร็จ!", "success"); if (targetStatus === 'เคาะแล้ว') fireConfetti(); } }).saveFileRecord(rec); }
+      function exportToCSV() { let csv = "\uFEFFชื่อไฟล์,รายละเอียด,หมวดหมู่,ผู้รับผิดชอบ,แผนก,เวลาอัปโหลด,แก้ไขล่าสุด,สถานะ,URL\n"; currentFilteredData.forEach(r => csv += `"${r[1]}","${r[2]}","${r[3]}","${r[4]}","${r[5]}","${r[6]}","${r[7]}","${r[9]}","${r[8]}"\n`); let link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })); link.download = "Nanoki_Export.csv"; link.click(); }
+    </script>
+  </body>
+</html>
